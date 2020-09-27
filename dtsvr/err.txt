@@ -1,0 +1,392 @@
+dt_lib.cpp: In member function `int DataDump::DoDump(SysAdmin&)':
+dt_lib.cpp:464: syntax error before `.' token
+dt_lib.cpp:466: `st' undeclared (first use this function)
+dt_lib.cpp:466: (Each undeclared identifier is reported only once for each 
+   function it appears in.)
+dt_lib.cpp: At global scope:
+dt_lib.cpp:471: `memlimit' was not declared in this scope
+dt_lib.cpp:471: `dp' was not declared in this scope
+dt_lib.cpp:472: `dp' was not declared in this scope
+dt_lib.cpp:472: ISO C++ forbids declaration of `lgprintf' with no type
+dt_lib.cpp:472: `int lgprintf' redeclared as different kind of symbol
+/home/dtinfo/dtsrc/inc/wdbi_inc.h:583: previous declaration of `int 
+   lgprintf(const char*, ...)'
+dt_lib.cpp:472: initializer list being treated as compound expression
+dt_lib.cpp:473: syntax error before `.' token
+dt_lib.cpp:478: `dtdbc' was not declared in this scope
+dt_lib.cpp:479: `dtdbc' was not declared in this scope
+dt_lib.cpp:479: `AutoStmt st' used prior to declaration
+dt_lib.cpp:481: syntax error before `do'
+dt_lib.cpp:483: syntax error before `.' token
+dt_lib.cpp:484: ISO C++ forbids declaration of `clsrn' with no type
+dt_lib.cpp:484: redefinition of `int clsrn'
+dt_lib.cpp:480: `int clsrn' previously defined here
+dt_lib.cpp:485: syntax error before `for'
+dt_lib.cpp:485: syntax error before `;' token
+dt_lib.cpp:485: syntax error before `++' token
+dt_lib.cpp:487: `i' was not declared in this scope
+dt_lib.cpp:487: ISO C++ forbids declaration of `unlink' with no type
+dt_lib.cpp:487: `int unlink' redeclared as different kind of symbol
+/usr/include/unistd.h:736: previous declaration of `int unlink(const char*)'
+dt_lib.cpp:488: syntax error before `}' token
+dt_lib.cpp:489: syntax error before `.' token
+dt_lib.cpp:490: syntax error before `.' token
+dt_lib.cpp:491: syntax error before `.' token
+dt_lib.cpp:492: syntax error before `.' token
+dt_lib.cpp:493: ISO C++ forbids declaration of `clsrn' with no type
+dt_lib.cpp:493: redefinition of `int clsrn'
+dt_lib.cpp:484: `int clsrn' previously defined here
+dt_lib.cpp:494: syntax error before `for'
+dt_lib.cpp:494: syntax error before `;' token
+dt_lib.cpp:494: syntax error before `++' token
+dt_lib.cpp:496: `i' was not declared in this scope
+dt_lib.cpp:496: ISO C++ forbids declaration of `unlink' with no type
+dt_lib.cpp:496: redefinition of `int unlink'
+dt_lib.cpp:487: `int unlink' previously defined here
+dt_lib.cpp:497: syntax error before `}' token
+dt_lib.cpp:498: syntax error before `.' token
+dt_lib.cpp:499: syntax error before `.' token
+dt_lib.cpp:500: syntax error before `.' token
+dt_lib.cpp:505: ISO C++ forbids declaration of `maxblockrn' with no type
+dt_lib.cpp:505: `blocksize' was not declared in this scope
+dt_lib.cpp:505: `dp' was not declared in this scope
+dt_lib.cpp:506: syntax error before `{' token
+dt_lib.cpp:510: `dtdbc' was not declared in this scope
+dt_lib.cpp:510: redefinition of `AutoStmt st'
+dt_lib.cpp:479: `AutoStmt st' previously defined here
+dt_lib.cpp:511: syntax error before `.' token
+dt_lib.cpp:512: syntax error before `.' token
+dt_lib.cpp:513: syntax error before `.' token
+dt_lib.cpp:515: syntax error before `.' token
+dt_lib.cpp:516: ISO C++ forbids declaration of `maxblockrn' with no type
+dt_lib.cpp:516: redefinition of `int maxblockrn'
+dt_lib.cpp:505: `int maxblockrn' previously defined here
+dt_lib.cpp:516: `sp' was not declared in this scope
+dt_lib.cpp:516: `tabid' was not declared in this scope
+dt_lib.cpp:518: syntax error before `.' token
+dt_lib.cpp:520: ISO C++ forbids declaration of `fnorder' with no type
+dt_lib.cpp:521: syntax error before `try'
+dt_lib.cpp:531: syntax error before `try'
+dt_lib.cpp:533: syntax error before `,' token
+dt_lib.cpp:539: syntax error before `.' token
+dt_lib.cpp:540: syntax error before `.' token
+dt_lib.cpp:542: syntax error before `.' token
+dt_lib.cpp:543: syntax error before `.' token
+dt_lib.cpp:544: syntax error before `.' token
+dt_lib.cpp:545: `srcdbc' was not declared in this scope
+dt_lib.cpp:546: syntax error before `.' token
+dt_lib.cpp:549: syntax error before `.' token
+dt_lib.cpp:553: syntax error before `,' token
+dt_lib.cpp:554: syntax error before `,' token
+dt_lib.cpp:555: syntax error before `.' token
+dt_lib.cpp:556: syntax error before `.' token
+dt_lib.cpp:560: syntax error before `.' token
+dt_lib.cpp:562: ISO C++ forbids declaration of `srn' with no type
+dt_lib.cpp:562: conflicting types for `int srn'
+dt_lib.cpp:530: previous declaration as `LONG64 srn'
+dt_lib.cpp:563: syntax error before `while'
+dt_lib.cpp:565: ISO C++ forbids declaration of `lgprintf' with no type
+dt_lib.cpp:565: redefinition of `int lgprintf'
+dt_lib.cpp:472: `int lgprintf' previously defined here
+dt_lib.cpp:565: invalid conversion from `const char*' to `int'
+dt_lib.cpp:567: syntax error before `for'
+dt_lib.cpp:567: `dp' was not declared in this scope
+dt_lib.cpp:567: syntax error before `;' token
+dt_lib.cpp:567: syntax error before `++' token
+dt_lib.cpp:570: ISO C++ forbids declaration of `lgprintf' with no type
+dt_lib.cpp:570: redefinition of `int lgprintf'
+dt_lib.cpp:565: `int lgprintf' previously defined here
+dt_lib.cpp:570: invalid conversion from `const char*' to `int'
+dt_lib.cpp:572: ISO C++ forbids declaration of `rn' with no type
+dt_lib.cpp:572: redefinition of `int rn'
+dt_lib.cpp:561: `int rn' previously defined here
+dt_lib.cpp:573: syntax error before `+=' token
+dt_lib.cpp:578: syntax error before `,' token
+dt_lib.cpp:579: ISO C++ forbids declaration of `dumpcomplete' with no type
+dt_lib.cpp:579: conflicting types for `int dumpcomplete'
+dt_lib.cpp:528: previous declaration as `bool dumpcomplete'
+dt_lib.cpp:580: syntax error before `,' token
+dt_lib.cpp:581: syntax error before `.' token
+dt_lib.cpp:586: `tabid' was not declared in this scope
+dt_lib.cpp:586: `datapartid' was not declared in this scope
+dt_lib.cpp:586: `frn' was not declared in this scope
+dt_lib.cpp:586: ISO C++ forbids declaration of `errprintf' with no type
+dt_lib.cpp:586: `int errprintf' redeclared as different kind of symbol
+/home/dtinfo/dtsrc/inc/wdbi_inc.h:582: previous declaration of `int 
+   errprintf(const char*, ...)'
+dt_lib.cpp:586: initializer list being treated as compound expression
+dt_lib.cpp:587: syntax error before `.' token
+dt_lib.cpp:589: syntax error before `if'
+dt_lib.cpp:596: syntax error before `.' token
+dt_lib.cpp:600: ISO C++ forbids declaration of `restored' with no type
+dt_lib.cpp:600: conflicting types for `int restored'
+dt_lib.cpp:588: previous declaration as `bool restored'
+dt_lib.cpp:601: syntax error before `{' token
+dt_lib.cpp:601: syntax error before `.' token
+dt_lib.cpp:601: syntax error before `.' token
+dt_lib.cpp:601: `req' was not declared in this scope
+dt_lib.cpp:601: `rem' was not declared in this scope
+dt_lib.cpp:601: ISO C++ forbids declaration of `nanosleep' with no type
+dt_lib.cpp:601: `int nanosleep' redeclared as different kind of symbol
+/usr/include/time.h:325: previous declaration of `int nanosleep(const 
+   timespec*, timespec*)'
+dt_lib.cpp:601: initializer list being treated as compound expression
+dt_lib.cpp:601: syntax error before `}' token
+dt_lib.cpp:607: syntax error before `,' token
+dt_lib.cpp:610: ISO C++ forbids declaration of `errprintf' with no type
+dt_lib.cpp:610: redefinition of `int errprintf'
+dt_lib.cpp:586: `int errprintf' previously defined here
+dt_lib.cpp:610: invalid conversion from `const char*' to `int'
+dt_lib.cpp:611: syntax error before `.' token
+dt_lib.cpp:612: `dtdbc' was not declared in this scope
+dt_lib.cpp:612: redefinition of `AutoStmt st'
+dt_lib.cpp:510: `AutoStmt st' previously defined here
+dt_lib.cpp:613: syntax error before `.' token
+dt_lib.cpp:617: ISO C++ forbids declaration of `errprintf' with no type
+dt_lib.cpp:617: redefinition of `int errprintf'
+dt_lib.cpp:610: `int errprintf' previously defined here
+dt_lib.cpp:617: invalid conversion from `const char*' to `int'
+dt_lib.cpp:618: syntax error before `for'
+dt_lib.cpp:618: `frn' was not declared in this scope
+dt_lib.cpp:618: syntax error before `;' token
+dt_lib.cpp:618: syntax error before `++' token
+dt_lib.cpp:622: `frn' was not declared in this scope
+dt_lib.cpp:622: syntax error before `;' token
+dt_lib.cpp:622: syntax error before `++' token
+dt_lib.cpp:624: `fnmt' was not declared in this scope
+dt_lib.cpp:624: `i' was not declared in this scope
+dt_lib.cpp:624: ISO C++ forbids declaration of `unlink' with no type
+dt_lib.cpp:624: redefinition of `int unlink'
+dt_lib.cpp:496: `int unlink' previously defined here
+dt_lib.cpp:625: syntax error before `}' token
+dt_lib.cpp:626: ISO C++ forbids declaration of `errprintf' with no type
+dt_lib.cpp:626: redefinition of `int errprintf'
+dt_lib.cpp:617: `int errprintf' previously defined here
+dt_lib.cpp:626: invalid conversion from `const char*' to `int'
+dt_lib.cpp:627: syntax error before `.' token
+dt_lib.cpp:628: syntax error before `.' token
+dt_lib.cpp:629: syntax error before `.' token
+dt_lib.cpp:634: `tabid' was not declared in this scope
+dt_lib.cpp:634: `datapartid' was not declared in this scope
+dt_lib.cpp:634: ISO C++ forbids declaration of `lgprintf' with no type
+dt_lib.cpp:634: redefinition of `int lgprintf'
+dt_lib.cpp:570: `int lgprintf' previously defined here
+dt_lib.cpp:634: initializer list being treated as compound expression
+dt_lib.cpp:636: `sorttm' was not declared in this scope
+dt_lib.cpp:636: `fiotm' was not declared in this scope
+dt_lib.cpp:636: `adjtm' was not declared in this scope
+dt_lib.cpp:636: ISO C++ forbids declaration of `lgprintf' with no type
+dt_lib.cpp:636: redefinition of `int lgprintf'
+dt_lib.cpp:634: `int lgprintf' previously defined here
+dt_lib.cpp:636: initializer list being treated as compound expression
+dt_lib.cpp:638: ISO C++ forbids declaration of `lgprintf' with no type
+dt_lib.cpp:638: redefinition of `int lgprintf'
+dt_lib.cpp:636: `int lgprintf' previously defined here
+dt_lib.cpp:638: invalid conversion from `const char*' to `int'
+dt_lib.cpp:639: syntax error before `.' token
+dt_lib.cpp: In member function `int MiddleDataLoader::CreateLike(const char*, 
+   const char*, const char*, const char*, const char*)':
+dt_lib.cpp:756: `lgprintf' cannot be used as a function
+dt_lib.cpp:758: `lgprintf' cannot be used as a function
+dt_lib.cpp:778: `errprintf' cannot be used as a function
+dt_lib.cpp:784: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `int MiddleDataLoader::dtfile_chk(const char*, 
+   const char*)':
+dt_lib.cpp:906: `errprintf' cannot be used as a function
+dt_lib.cpp:912: `errprintf' cannot be used as a function
+dt_lib.cpp:925: `errprintf' cannot be used as a function
+dt_lib.cpp:931: `errprintf' cannot be used as a function
+dt_lib.cpp:947: `errprintf' cannot be used as a function
+dt_lib.cpp:955: `errprintf' cannot be used as a function
+dt_lib.cpp:959: `errprintf' cannot be used as a function
+dt_lib.cpp:962: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `void MiddleDataLoader::CheckEmptyDump()':
+dt_lib.cpp:981: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `int MiddleDataLoader::Load(int, int, bool)':
+dt_lib.cpp:1072: `lgprintf' cannot be used as a function
+dt_lib.cpp:1096: `lgprintf' cannot be used as a function
+dt_lib.cpp:1097: `lgprintf' cannot be used as a function
+dt_lib.cpp:1104: `lgprintf' cannot be used as a function
+dt_lib.cpp:1107: `lgprintf' cannot be used as a function
+dt_lib.cpp:1109: `lgprintf' cannot be used as a function
+dt_lib.cpp:1125: `errprintf' cannot be used as a function
+dt_lib.cpp:1132: `lgprintf' cannot be used as a function
+dt_lib.cpp:1141: `lgprintf' cannot be used as a function
+dt_lib.cpp:1142: `unlink' cannot be used as a function
+dt_lib.cpp:1143: `unlink' cannot be used as a function
+dt_lib.cpp:1146: `unlink' cannot be used as a function
+dt_lib.cpp:1148: `unlink' cannot be used as a function
+dt_lib.cpp:1150: `unlink' cannot be used as a function
+dt_lib.cpp:1152: `unlink' cannot be used as a function
+dt_lib.cpp:1186: `lgprintf' cannot be used as a function
+dt_lib.cpp:1202: `lgprintf' cannot be used as a function
+dt_lib.cpp:1210: `lgprintf' cannot be used as a function
+dt_lib.cpp:1217: `lgprintf' cannot be used as a function
+dt_lib.cpp:1300: `lgprintf' cannot be used as a function
+dt_lib.cpp:1305: `lgprintf' cannot be used as a function
+dt_lib.cpp:1444: `lgprintf' cannot be used as a function
+dt_lib.cpp:1568: `lgprintf' cannot be used as a function
+dt_lib.cpp:1575: `errprintf' cannot be used as a function
+dt_lib.cpp:1577: `errprintf' cannot be used as a function
+dt_lib.cpp:1580: `errprintf' cannot be used as a function
+dt_lib.cpp:1581: `errprintf' cannot be used as a function
+dt_lib.cpp:1584: `errprintf' cannot be used as a function
+dt_lib.cpp:1585: `errprintf' cannot be used as a function
+dt_lib.cpp:1588: `unlink' cannot be used as a function
+dt_lib.cpp:1589: `unlink' cannot be used as a function
+dt_lib.cpp:1591: `errprintf' cannot be used as a function
+dt_lib.cpp:1604: `lgprintf' cannot be used as a function
+dt_lib.cpp:1605: `lgprintf' cannot be used as a function
+dt_lib.cpp:1636: `lgprintf' cannot be used as a function
+dt_lib.cpp:1644: `lgprintf' cannot be used as a function
+dt_lib.cpp:1649: `lgprintf' cannot be used as a function
+dt_lib.cpp:1650: `unlink' cannot be used as a function
+dt_lib.cpp:1651: `lgprintf' cannot be used as a function
+dt_lib.cpp:1652: `unlink' cannot be used as a function
+dt_lib.cpp:1654: `lgprintf' cannot be used as a function
+dt_lib.cpp:1665: `errprintf' cannot be used as a function
+dt_lib.cpp: In member function `bool SysAdmin::EmptyIndex(int)':
+dt_lib.cpp:1689: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `bool SysAdmin::CreateTableOnMysql(int, const 
+   char*, bool)':
+dt_lib.cpp:1735: `nanosleep' cannot be used as a function
+dt_lib.cpp: In member function `void SysAdmin::CloseTable(int, char*, bool)':
+dt_lib.cpp:1753: `lgprintf' cannot be used as a function
+dt_lib.cpp:1755: `lgprintf' cannot be used as a function
+dt_lib.cpp:1766: `unlink' cannot be used as a function
+dt_lib.cpp:1769: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `void SysAdmin::DataOnLine(int)':
+dt_lib.cpp:1789: `lgprintf' cannot be used as a function
+dt_lib.cpp:1890: `lgprintf' cannot be used as a function
+dt_lib.cpp:1893: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `void SysAdmin::BuildDTP(const char*)':
+dt_lib.cpp:1938: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `void SysAdmin::RepairAllIndex(int, int, int)':
+dt_lib.cpp:2083: `lgprintf' cannot be used as a function
+dt_lib.cpp:2085: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `void SysAdmin::CreateIndex(const char*, int, 
+   const char*, bool)':
+dt_lib.cpp:2155: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `int DestLoader::Load(bool)':
+dt_lib.cpp:2186: `lgprintf' cannot be used as a function
+dt_lib.cpp:2276: `lgprintf' cannot be used as a function
+dt_lib.cpp:2319: `lgprintf' cannot be used as a function
+dt_lib.cpp:2353: `lgprintf' cannot be used as a function
+dt_lib.cpp:2372: `lgprintf' cannot be used as a function
+dt_lib.cpp:2399: `lgprintf' cannot be used as a function
+dt_lib.cpp:2406: `lgprintf' cannot be used as a function
+dt_lib.cpp:2409: `unlink' cannot be used as a function
+dt_lib.cpp:2418: `lgprintf' cannot be used as a function
+dt_lib.cpp:2424: `lgprintf' cannot be used as a function
+dt_lib.cpp:2443: `lgprintf' cannot be used as a function
+dt_lib.cpp:2449: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `int DestLoader::MoveTable(const char*, const 
+   char*, const char*, const char*)':
+dt_lib.cpp:2459: `lgprintf' cannot be used as a function
+dt_lib.cpp:2490: `lgprintf' cannot be used as a function
+dt_lib.cpp:2498: `lgprintf' cannot be used as a function
+dt_lib.cpp:2502: `lgprintf' cannot be used as a function
+dt_lib.cpp:2533: `lgprintf' cannot be used as a function
+dt_lib.cpp:2541: `lgprintf' cannot be used as a function
+dt_lib.cpp:2558: `lgprintf' cannot be used as a function
+dt_lib.cpp:2571: `lgprintf' cannot be used as a function
+dt_lib.cpp:2604: `lgprintf' cannot be used as a function
+dt_lib.cpp:2609: `lgprintf' cannot be used as a function
+dt_lib.cpp:2611: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `int DestLoader::ReLoad()':
+dt_lib.cpp:2639: `lgprintf' cannot be used as a function
+dt_lib.cpp:2645: `lgprintf' cannot be used as a function
+dt_lib.cpp:2686: `lgprintf' cannot be used as a function
+dt_lib.cpp:2688: `lgprintf' cannot be used as a function
+dt_lib.cpp:2695: `unlink' cannot be used as a function
+dt_lib.cpp:2698: `lgprintf' cannot be used as a function
+dt_lib.cpp:2700: `unlink' cannot be used as a function
+dt_lib.cpp:2703: `lgprintf' cannot be used as a function
+dt_lib.cpp:2705: `lgprintf' cannot be used as a function
+dt_lib.cpp:2709: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `int DestLoader::RecreateIndex(SysAdmin*)':
+dt_lib.cpp:2743: `lgprintf' cannot be used as a function
+dt_lib.cpp:2748: `lgprintf' cannot be used as a function
+dt_lib.cpp:2749: `unlink' cannot be used as a function
+dt_lib.cpp:2750: `lgprintf' cannot be used as a function
+dt_lib.cpp:2751: `unlink' cannot be used as a function
+dt_lib.cpp:2753: `lgprintf' cannot be used as a function
+dt_lib.cpp:2785: `lgprintf' cannot be used as a function
+dt_lib.cpp:2797: `lgprintf' cannot be used as a function
+dt_lib.cpp:2800: `lgprintf' cannot be used as a function
+dt_lib.cpp:2802: `lgprintf' cannot be used as a function
+dt_lib.cpp:2812: `errprintf' cannot be used as a function
+dt_lib.cpp: In member function `int DestLoader::ReCompress(int)':
+dt_lib.cpp:2864: `lgprintf' cannot be used as a function
+dt_lib.cpp:2866: `lgprintf' cannot be used as a function
+dt_lib.cpp:2875: `lgprintf' cannot be used as a function
+dt_lib.cpp:2901: `lgprintf' cannot be used as a function
+dt_lib.cpp:2905: `lgprintf' cannot be used as a function
+dt_lib.cpp:3047: `nanosleep' cannot be used as a function
+dt_lib.cpp:3064: `errprintf' cannot be used as a function
+dt_lib.cpp:3072: `errprintf' cannot be used as a function
+dt_lib.cpp:3073: `unlink' cannot be used as a function
+dt_lib.cpp:3074: `unlink' cannot be used as a function
+dt_lib.cpp:3079: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `int DestLoader::ToMySQLBlock(const char*, const 
+   char*)':
+dt_lib.cpp:3086: `lgprintf' cannot be used as a function
+dt_lib.cpp:3098: `lgprintf' cannot be used as a function
+dt_lib.cpp:3129: `lgprintf' cannot be used as a function
+dt_lib.cpp:3133: `lgprintf' cannot be used as a function
+dt_lib.cpp:3147: `lgprintf' cannot be used as a function
+dt_lib.cpp:3189: `errprintf' cannot be used as a function
+dt_lib.cpp:3195: `errprintf' cannot be used as a function
+dt_lib.cpp:3196: `unlink' cannot be used as a function
+dt_lib.cpp:3197: `unlink' cannot be used as a function
+dt_lib.cpp:3201: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `int DestLoader::RemoveTable(const char*, const 
+   char*, bool)':
+dt_lib.cpp:3210: `lgprintf' cannot be used as a function
+dt_lib.cpp:3235: `lgprintf' cannot be used as a function
+dt_lib.cpp:3262: `unlink' cannot be used as a function
+dt_lib.cpp:3263: `lgprintf' cannot be used as a function
+dt_lib.cpp:3277: `lgprintf' cannot be used as a function
+dt_lib.cpp:3280: `lgprintf' cannot be used as a function
+dt_lib.cpp:3283: `unlink' cannot be used as a function
+dt_lib.cpp:3287: `lgprintf' cannot be used as a function
+dt_lib.cpp:3297: `lgprintf' cannot be used as a function
+dt_lib.cpp:3303: `lgprintf' cannot be used as a function
+dt_lib.cpp:3311: `lgprintf' cannot be used as a function
+dt_lib.cpp:3312: `unlink' cannot be used as a function
+dt_lib.cpp:3314: `unlink' cannot be used as a function
+dt_lib.cpp:3316: `unlink' cannot be used as a function
+dt_lib.cpp:3317: `lgprintf' cannot be used as a function
+dt_lib.cpp:3318: `unlink' cannot be used as a function
+dt_lib.cpp:3320: `unlink' cannot be used as a function
+dt_lib.cpp:3322: `unlink' cannot be used as a function
+dt_lib.cpp:3344: `lgprintf' cannot be used as a function
+dt_lib.cpp:3354: `lgprintf' cannot be used as a function
+dt_lib.cpp:3356: `lgprintf' cannot be used as a function
+dt_lib.cpp:3379: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `int SysAdmin::CleanData(bool)':
+dt_lib.cpp:3394: `lgprintf' cannot be used as a function
+dt_lib.cpp:3418: `lgprintf' cannot be used as a function
+dt_lib.cpp:3426: `lgprintf' cannot be used as a function
+dt_lib.cpp:3427: `unlink' cannot be used as a function
+dt_lib.cpp:3430: `unlink' cannot be used as a function
+dt_lib.cpp:3432: `unlink' cannot be used as a function
+dt_lib.cpp:3433: `lgprintf' cannot be used as a function
+dt_lib.cpp:3434: `unlink' cannot be used as a function
+dt_lib.cpp:3436: `unlink' cannot be used as a function
+dt_lib.cpp:3438: `unlink' cannot be used as a function
+dt_lib.cpp:3448: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `int SysAdmin::CreateIndexMT(AutoMt&, int, int, 
+   int, int*, char*, bool)':
+dt_lib.cpp:3516: `lgprintf' cannot be used as a function
+dt_lib.cpp:3546: `lgprintf' cannot be used as a function
+dt_lib.cpp: In member function `void SysAdmin::OutTaskDesc(const char*, int, 
+   int, int)':
+dt_lib.cpp:3661: `lgprintf' cannot be used as a function
+dt_lib.cpp:3665: `lgprintf' cannot be used as a function
+dt_lib.cpp:3666: `lgprintf' cannot be used as a function
+dt_lib.cpp:3667: `lgprintf' cannot be used as a function
+dt_lib.cpp:3668: `lgprintf' cannot be used as a function
+dt_lib.cpp:3673: `lgprintf' cannot be used as a function
+dt_lib.cpp:3678: `lgprintf' cannot be used as a function
+make: *** [dt_lib.o] Error 1

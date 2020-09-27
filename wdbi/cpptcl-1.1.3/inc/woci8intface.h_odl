@@ -1,0 +1,581 @@
+#ifndef USE_WDBI
+#ifndef _WOCI8INTERFACE_H
+#define _WOCI8INTERFACE_H
+#define INT_INVALID_HANDLE	-1
+#define INT_ALLOCATE_FAIL   -2
+#define COLUMN_TYPE_CHAR	1 //SQLT_CHR
+#define COLUMN_TYPE_FLOAT	4 //SQLT_FLT
+#define COLUMN_TYPE_NUM		2 //SQLT_NUM
+#define COLUMN_TYPE_INT		3 //SQLT_INT
+#define COLUMN_TYPE_DATE	12 //SQLT_DAT
+#define VALUESET_SET		0 
+#define VALUESET_ADD		1
+#define VALUESET_SUB		2
+#ifdef __unix
+#define getch getchar
+#endif
+#include <stdio.h>
+
+#ifndef BOOL
+#define FALSE 0
+#define TRUE 1
+#define BOOL int
+#endif
+
+//////////////////////////////////////////////////////////////////
+// Common function (5). 
+//
+//
+//////////////////////////////////////////////////////////////////
+
+#ifndef WOCI_DEBUG
+#define wociMainEntrance(func,asyncmode,ptr,catchLevel)				   _wociMainEntrance(func,asyncmode,ptr,catchLevel)				  
+#define wocidestroy(handle)                                                        _wocidestroy(handle)                                                      
+#define wociDestroyAll()                                                           _wociDestroyAll()                                                         
+#define wociBreakAll()                                                             _wociBreakAll()                                                           
+#define wociCreateSession(username,password,svcname)                               _wociCreateSession(username,password,svcname)                             
+#define wociCommit(sess)                                                           _wociCommit(sess)                                                         
+#define wociRollback(sess)                                                         _wociRollback(sess)                                                       
+#define wociSetTerminate(sess,val)                                                 _wociSetTerminate(sess,val)                                               
+#define wociIsTerminate(sess)                                                      _wociIsTerminate(sess)                                                    
+#define wociSetNonBlockMode(sess)                                                  _wociSetNonBlockMode(sess)                                                
+#define wociCreateStatment(sess)                                                   _wociCreateStatment(sess)                                                 
+#define wociBindStrByPos(stmt,pos,ptr,len)                                         _wociBindStrByPos(stmt,pos,ptr,len)                                       
+#define wociBindDoubleByPos(stmt,pos,ptr)                                          _wociBindDoubleByPos(stmt,pos,ptr)                                        
+#define wociBindIntByPos(stmt,pos,ptr)                                             _wociBindIntByPos(stmt,pos,ptr)                                           
+#define wociBindDateByPos(stmt,pos,ptr)                                            _wociBindDateByPos(stmt,pos,ptr)                                          
+#define wociDefineStrByPos(stmt,pos,ptr,len)                                       _wociDefineStrByPos(stmt,pos,ptr,len)                                     
+#define wociDefineDoubleByPos(stmt,pos,ptr)                                        _wociDefineDoubleByPos(stmt,pos,ptr)                                      
+#define wociDefineIntByPos(stmt,pos,ptr)                                           _wociDefineIntByPos(stmt,pos,ptr)                                         
+#define wociDefineDateByPos(stmt,pos,ptr)                                          _wociDefineDateByPos(stmt,pos,ptr)                                        
+#define wociBreakAndReset(stmt)                                                    _wociBreakAndReset(stmt)                                                  
+#define wociExecute(stmt,times)                                                    _wociExecute(stmt,times)                                                  
+#define wociExecuteAt(stmt,times,offset)                                           _wociExecuteAt(stmt,times,offset)                                         
+#define wociFetch(stmt,rows)                                                       _wociFetch(stmt,rows)                                                     
+#define wociGetStmtColumnsNum(stmt)                                                _wociGetStmtColumnsNum(stmt)                                              
+#define wociGetMtColumnsNum(mt)                                                    _wociGetMtColumnsNum(mt)                                                  
+#define wociGetFetchedRows(stmt)                                                   _wociGetFetchedRows(stmt)                                                 
+#define wociGetSession(stmt)                                                       _wociGetSession(stmt)                                                     
+#define wociGetStmtType(stmt)                                                      _wociGetStmtType(stmt)                                                    
+#define wociPrepareStmt(stmt,sqlstmt)                                              _wociPrepareStmt(stmt,sqlstmt)                                            
+#define wociGetCreateTableSQL(memtab,buf,tabname,ismysql)                          _wociGetCreateTableSQL(memtab,buf,tabname,ismysql)                        
+#define wociCreateMemTable()                                                       _wociCreateMemTable()                                                     
+#define wociAddColumn(memtab,name,dspname,ctype,length,scale)                      _wociAddColumn(memtab,name,dspname,ctype,length,scale)                    
+#define wociBuildStmt(memtab,stmt,rows)                                            _wociBuildStmt(memtab,stmt,rows)                                          
+#define wociBuild(memtab,rows)                                                     _wociBuild(memtab,rows)                                                   
+#define wociClear(memtab)                                                          _wociClear(memtab)                                                        
+#define wociAppendToDbTable(memtab,tablename,sess,autocommit)                      _wociAppendToDbTable(memtab,tablename,sess,autocommit)                    
+#define wociFetchAll(memtab)                                                       _wociFetchAll(memtab)                                                     
+#define wociFetchFirst(memtab,rows)                                                _wociFetchFirst(memtab,rows)                                              
+#define wociFetchAt(memtab,rows,st)                                                _wociFetchAt(memtab,rows,st)                                              
+#define wociFetchNext(memtab,rows)                                                 _wociFetchNext(memtab,rows)                                               
+#define wociGeneTable(memtab,tablename,sess)                                       _wociGeneTable(memtab,tablename,sess)                                     
+#define wociSetMTName(memtab,mtname)                                               _wociSetMTName(memtab,mtname)                                             
+#define wociGetStrAddrByName(memtab,col,rowst,pstr,celllen)                        _wociGetStrAddrByName(memtab,col,rowst,pstr,celllen)                      
+#define wociGetDateAddrByName(memtab,col,rowst,pstr)                               _wociGetDateAddrByName(memtab,col,rowst,pstr)                             
+#define wociGetDoubleAddrByName(memtab,col,rowst,pstr)                             _wociGetDoubleAddrByName(memtab,col,rowst,pstr)                           
+#define wociGetIntAddrByName(memtab,col,rowst,pstr)                                _wociGetIntAddrByName(memtab,col,rowst,pstr)                              
+#define wociGetStrValByName(memtab,col,rowst,pstr)                                 _wociGetStrValByName(memtab,col,rowst,pstr)                               
+#define wociGetDateValByName(memtab,col,rowst,pstr)                                _wociGetDateValByName(memtab,col,rowst,pstr)                              
+#define wociGetDoubleValByName(memtab,col,rowst)                                   _wociGetDoubleValByName(memtab,col,rowst)                                 
+#define wociGetIntValByName(memtab,col,rowst)                                      _wociGetIntValByName(memtab,col,rowst)                                    
+#define wociGetStrAddrByPos(memtab,col,rowst,pstr,celllen)                         _wociGetStrAddrByPos(memtab,col,rowst,pstr,celllen)                       
+#define wociGetDateAddrByPos(memtab,col,rowst,pstr)                                _wociGetDateAddrByPos(memtab,col,rowst,pstr)                              
+#define wociGetDoubleAddrByPos(memtab,col,rowst,pstr)                              _wociGetDoubleAddrByPos(memtab,col,rowst,pstr)                            
+#define wociGetIntAddrByPos(memtab,col,rowst,pstr)                                 _wociGetIntAddrByPos(memtab,col,rowst,pstr)                               
+#define wociGetBufferLen(memtab)                                                   _wociGetBufferLen(memtab)                                                 
+#define wociGetCell(memtab,row,col,str,rawpos)                                     _wociGetCell(memtab,row,col,str,rawpos)                                   
+#define wociGetColumnDisplayWidth(memtab,col)                                      _wociGetColumnDisplayWidth(memtab,col)                                    
+#define wociGetColumnPosByName(memtab,colname)                                     _wociGetColumnPosByName(memtab,colname)                                   
+#define wociGetColumnName(memtab,id,colname)                                       _wociGetColumnName(memtab,id,colname)                                     
+#define wociGetColumnDataLenByPos(memtab,colid)                                    _wociGetColumnDataLenByPos(memtab,colid)                                  
+#define wociGetColumnNumber(memtab)                                                _wociGetColumnNumber(memtab)                                              
+#define wociGetColumnScale(memtab,colid)                                           _wociGetColumnScale(memtab,colid)                                         
+#define wociGetColumnTitle(memtab,colid,str,len)                                   _wociGetColumnTitle(memtab,colid,str,len)                                 
+#define wociGetColumnType(memtab,colid)                                            _wociGetColumnType(memtab,colid)                                          
+#define wociGetLine(memtab,row,str,rawpos,colsnm)                                  _wociGetLine(memtab,row,str,rawpos,colsnm,NULL)                                
+#define wociGetCompactLen(memtab,rowstart,rownum,colsnm,clen)			   _wociGetCompactLen(memtab,rowstart,rownum,colsnm,clen)
+#define wociGetCompactLine(memtab,row,str,rawpos,colsnm,clen)                      _wociGetCompactLine(memtab,row,str,rawpos,colsnm,clen)                               
+#define wociGetCompactTitle(memtab,str,len,colsnm,clen)                            _wociGetTitle(memtab,str,len,colsnm,clen)                                      
+#define wociGetMemtableRows(memtab)                                                _wociGetMemtableRows(memtab)                                              
+#define wociGetTitle(memtab,str,len,colsnm)                                        _wociGetTitle(memtab,str,len,colsnm,NULL)                                      
+#define wociIsIKSet(memtab)                                                        _wociIsIKSet(memtab)                                                      
+#define wociOrderByIK(memtab)                                                      _wociOrderByIK(memtab)                                                    
+#define wociSearchIK(memtab,key)                                                   _wociSearchIK(memtab,key)                                                 
+#define wociSearchIKLE(memtab,key)                                                 _wociSearchIKLE(memtab,key)                                               
+#define wociSetColumnDisplayName(memtab,colnm,str)                                 _wociSetColumnDisplayName(memtab,colnm,str)                               
+#define wociSetIKByName(memtab,str)                                                _wociSetIKByName(memtab,str)                                              
+#define wociSetSortColumn(memtab,colsnm)                                           _wociSetSortColumn(memtab,colsnm)                                         
+#define wociReInOrder(memtab)                                                      _wociReInOrder(memtab)                                                    
+#define wociSetStrValues(memtab,colid,rowstart,rownum,bf)                          _wociSetStrValues(memtab,colid,rowstart,rownum,bf)                        
+#define wociSetDateValues(memtab,colid,rowstart,rownum,bf)                         _wociSetDateValues(memtab,colid,rowstart,rownum,bf)                       
+#define wociSetDoubleValues(memtab,colid,rowstart,rownum,bf)                       _wociSetDoubleValues(memtab,colid,rowstart,rownum,bf)                     
+#define wociSetIntValues(memtab,colid,rowstart,rownum,bf)                         _wociSetIntValues(memtab,colid,rowstart,rownum,bf)                       
+#define wociSort(memtab)                                                           _wociSort(memtab)                                                         
+#define wociSortHeap(memtab)                                                       _wociSortHeap(memtab)                                                     
+#define wociSetGroupSrc(memtab,src)                                                _wociSetGroupSrc(memtab,src)                                              
+#define wociSetIKGroupRef(memtab,ref,colnm)                                        _wociSetIKGroupRef(memtab,ref,colnm)                                      
+#define wociSetGroupSrcCol(memtab,colsnm)                                          _wociSetGroupSrcCol(memtab,colsnm)                                        
+#define wociSetGroupRefCol(memtab,colsnm)                                          _wociSetGroupRefCol(memtab,colsnm)                                        
+#define wociSetSrcSumCol(memtab,colsnm)                                            _wociSetSrcSumCol(memtab,colsnm)                                          
+#define wociGroup(memtab,rowstart,rownum)                                          _wociGroup(memtab,rowstart,rownum)                                        
+#define wociCopyRowsTo(memtab,memtabto,toStart,start,rowsnum)                      _wociCopyRowsTo(memtab,memtabto,toStart,start,rowsnum)                    
+#define wociGetColumnDesc(memtab,pColDesc,cdlen,_colnm)                            _wociGetColumnDesc(memtab,pColDesc,cdlen,_colnm)                          
+#define wociCopyColumnDefine(memtab,memtabfrom,colsname)                           _wociCopyColumnDefine(memtab,memtabfrom,colsname)                         
+#define wociExportSomeRows(memtab,pData,startrn,rnnum)                             _wociExportSomeRows(memtab,pData,startrn,rnnum)                           
+#define wociExport(memtab,pData,_len,_maxrows,_rowct)                              _wociExport(memtab,pData,_len,_maxrows,_rowct)                            
+#define wociImport(memtab,pData,_len,pColDesc,_colnm,_cdlen,_maxrows,_rowct)       _wociImport(memtab,pData,_len,pColDesc,_colnm,_cdlen,_maxrows,_rowct)     
+#define wociAppendRows(memtab,pData,rnnum)                                         _wociAppendRows(memtab,pData,rnnum)                                       
+#define wociReset(memtab)                                                          _wociReset(memtab)                                                        
+#define wociClearIK(memtab)                                                        _wociClearIK(memtab)                                                      
+#define wociClearSort(memtab)                                                      _wociClearSort(memtab)                                                    
+#define wociGetMaxRows(memtab)                                                     _wociGetMaxRows(memtab)                                                   
+#define wociCompact(memtab)                                                        _wociCompact(memtab)                                                      
+#define wociGetRowLen(memta)                                                       _wociGetRowLen(memta)                                                     
+#define wociCreateExcelEnv()                                                       _wociCreateExcelEnv()                                                     
+#define wociSetDir(excel,strTemplate,strReport)                                    _wociSetDir(excel,strTemplate,strReport)                                  
+#define wociSetMemTable(excel,memtab)                                              _wociSetMemTable(excel,memtab)                                            
+#define wociLoadTemplate(excel,tempname)                                           _wociLoadTemplate(excel,tempname)                                         
+#define wociSelectSheet(excel,sheetname)                                           _wociSelectSheet(excel,sheetname)                                         
+#define wociFillData(excel,tocol, torow, fromcol, fromrow, colnum, rownum,rawpos)  _wociFillData(excel,tocol, torow, fromcol, fromrow, colnum, rownum,rawpos)
+#define wociFillTitle(excel,tocol,torow,fromcol,colnum)                            _wociFillTitle(excel,tocol,torow,fromcol,colnum)                          
+#define wociSaveAs(excel,filename)                                                 _wociSaveAs(excel,filename)                                               
+#define wociGetMemUsed(memtab)                                                     _wociGetMemUsed(memtab)                                                   
+#define wociSetSortedGroupRef(memtab,mtref, colssrc)                               _wociSetSortedGroupRef(memtab,mtref, colssrc)                             
+#define wociSearch(memtab,ptr)                                                     _wociSearch(memtab,ptr)                                                   
+#define wociSearchLE(memtab,ptr)                                                   _wociSearchLE(memtab,ptr)                                                 
+#define wociValuesSet(memtab,mtsrc,colto,colfrom,usedestKey,op)                    _wociValuesSet(memtab,mtsrc,colto,colfrom,usedestKey,op)                  
+#define wociDeleteRow(memtab,rown)                                                 _wociDeleteRow(memtab,rown)                                                  
+#define wociInsertRows(memtab,ptr,colsname,num)                                    _wociInsertRows(memtab,ptr,colsname,num)                                     
+#define wociBindToStatment(memtab,stmt,colsname,rowst)                             _wociBindToStatment(memtab,stmt,colsname,rowst)                              
+#define wociTestTable(sess,tablename)                                              _wociTestTable(sess,tablename)                                               
+#define wociGetRawrnBySort(memtab,ind)                                             _wociGetRawrnBySort(memtab,ind)                                              
+#define wociGetRawrnByIK(memtab,ind)                                               _wociGetRawrnByIK(memtab,ind)                                                
+#define wociCompressBf(memtab)                                                     _wociCompressBf(memtab)                                                      
+#define wociSearchQDel(memtab,key,schopt)                                          _wociSearchQDel(memtab,key,schopt)                                           
+#define wociIsQDelete(memtab,rownm)                                                _wociIsQDelete(memtab,rownm)                                                 
+#define wociQDeletedRows(memtab)                                                   _wociQDeletedRows(memtab)                                                    
+#define wociQDeleteRow(memtab,rownm)                                               _wociQDeleteRow(memtab,rownm)                                                
+#define wociWaitStmt(stmt)                                                         _wociWaitStmt(stmt)                                                          
+#define wociWaitMemtable(memtab)                                                   _wociWaitMemtable(memtab)                                                    
+#define wociWaitLastReturn(handle)                                                 _wociWaitLastReturn(handle)                                                  
+#define wociWaitTime(handle,time)                                                  _wociWaitTime(handle,time)                                                   
+#define wociFreshRowNum(memtab)                                                    _wociFreshRowNum(memtab)                                                     
+#define wociBatchSelect(result,param,colsnm)                                       _wociBatchSelect(result,param,colsnm)                                        
+#define wociMTPrint(memtab,rownm,colsnm)                                           _wociMTPrint(memtab,rownm,colsnm,false)                                            
+#define wociMTCompactPrint(memtab,rownm,colsnm)                                    _wociMTPrint(memtab,rownm,colsnm,true)                                            
+#define wociGetCurDateTime(date)                                                   _wociGetCurDateTime(date)                                                    
+#define wociSetDateTime(date,year,mon,day,hour,min,sec)                            _wociSetDateTime(date,year,mon,day,hour,min,sec)                             
+#define wociSetDate(date,year,mon,day)                                             _wociSetDate(date,year,mon,day)                                              
+#define wociDateTimeToStr(date,str)                                                _wociDateTimeToStr(date,str)                                                 
+#define wociGetYear(date)                                                          _wociGetYear(date)                                                           
+#define wociGetMonth(date)                                                         _wociGetMonth(date)                                                          
+#define wociGetDay(date)                                                           _wociGetDay(date)                                                            
+#define wociGetHour(date)                                                          _wociGetHour(date)                                                           
+#define wociGetMin(date)                                                           _wociGetMin(date)                                                            
+#define wociGetSec(date)                                                           _wociGetSec(date)                                                            
+#define wociSetEcho(val)                                                           _wociSetEcho(val)                                                            
+#define wociIsEcho()                                                           	   _wociIsEcho()                                                            
+#define wociMTToTextFile(memtab,fn,rownm,colsnm)                                   _wociMTToTextFile(memtab,fn,rownm,colsnm)                                    
+#define wociGetMTName(memtab,bf)                                                   _wociGetMTName(memtab,bf)                                                    
+#define wociReadFromTextFile(memtab,fn,rowst,rownm)                                _wociReadFromTextFile(memtab,fn,rowst,rownm)                                 
+#define wociFetchAllAt(memtab,st)                                                  _wociFetchAllAt(memtab,st)                                                   
+#define wociDateDiff(d1,d2)                                                        _wociDateDiff(d1,d2)                                                         
+#define wociSetOutputToConsole(val)                                                _wociSetOutputToConsole(val)                                                 
+#define wociSetTraceFile(fn)                                             _wociSetTraceFile(fn)                                              
+#define wociSetErrorFile(fn)                                                       _wociSetErrorFile(fn)                                                        
+#define wociSetLogFile(fn)                                                         _wociSetLogFile(fn)                                                          
+#define WOCIInit(appname)                                                          _WOCIInit(appname)                                                           
+#define WOCIQuit()                                                                 _WOCIQuit()                                                                  
+#define wociReplaceStmt(memtab,stmt)                                               _wociReplaceStmt(memtab,stmt)                                                
+#define wociConvertColStrToInt(memtab,colsn,pcol)                                  _wociConvertColStrToInt(memtab,colsn,pcol)                                   
+#define wociSaveSort(memtab,fp)                                                    _wociSaveSort(memtab,fp)                                                     
+#define wociLoadSort(memtab,fp)                                                    _wociLoadSort(memtab,fp)                                                     
+#define wociCopyToMySQL(memtab,startrow,rownum,fp)                                 _wociCopyToMySQL(memtab,startrow,rownum,fp)                                  
+#define wociCompareSortRow(memtab,row1, row2)                                      _wociCompareSortRow(memtab,row1, row2)                                       
+#define wociList(pout)                                                             _wociList(pout)                                                              
+#define wociGetLastError(handle)                                                   _wociGetLastError(handle)                                                    
+#define wociAddrFresh(memtab,colval,collen,tp)                                     _wociAddrFresh(memtab,colval,collen,tp)                                      
+#define wociGetColumnInfo(mt,crttab,ismysql)                               	   _wociGetColumnInfo(mt,crttab,ismysql)                                      
+#else
+#define LOGWHERE _wocilogwhere(__FILE__,__LINE__)
+#define wociMainEntrance(func,asyncmode,ptr,catchLevel)				   (LOGWHERE,_wociMainEntrance(func,asyncmode,ptr,catchLevel)				  )
+#define wocidestroy(handle)                                                        (LOGWHERE,_wocidestroy(handle)                                                         )                            
+#define wociDestroyAll()                                                           (LOGWHERE,_wociDestroyAll()                                                            )
+#define wociBreakAll()                                                             (LOGWHERE,_wociBreakAll()                                                              )
+#define wociCreateSession(username,password,svcname)                               (LOGWHERE,_wociCreateSession(username,password,svcname)                                )
+#define wociCommit(sess)                                                           (LOGWHERE,_wociCommit(sess)                                                            )
+#define wociRollback(sess)                                                         (LOGWHERE,_wociRollback(sess)                                                          )
+#define wociSetTerminate(sess,val)                                                 (LOGWHERE,_wociSetTerminate(sess,val)                                                  )
+#define wociIsTerminate(sess)                                                      (LOGWHERE,_wociIsTerminate(sess)                                                       )
+#define wociSetNonBlockMode(sess)                                                  (LOGWHERE,_wociSetNonBlockMode(sess)                                                   )
+#define wociCreateStatment(sess)                                                   (LOGWHERE,_wociCreateStatment(sess)                                                    )
+#define wociBindStrByPos(stmt,pos,ptr,len)                                         (LOGWHERE,_wociBindStrByPos(stmt,pos,ptr,len)                                          )
+#define wociBindDoubleByPos(stmt,pos,ptr)                                          (LOGWHERE,_wociBindDoubleByPos(stmt,pos,ptr)                                           )
+#define wociBindIntByPos(stmt,pos,ptr)                                             (LOGWHERE,_wociBindIntByPos(stmt,pos,ptr)                                              )
+#define wociBindDateByPos(stmt,pos,ptr)                                            (LOGWHERE,_wociBindDateByPos(stmt,pos,ptr)                                             )
+#define wociDefineStrByPos(stmt,pos,ptr,len)                                       (LOGWHERE,_wociDefineStrByPos(stmt,pos,ptr,len)                                        )
+#define wociDefineDoubleByPos(stmt,pos,ptr)                                        (LOGWHERE,_wociDefineDoubleByPos(stmt,pos,ptr)                                         )
+#define wociDefineIntByPos(stmt,pos,ptr)                                           (LOGWHERE,_wociDefineIntByPos(stmt,pos,ptr)                                            )
+#define wociDefineDateByPos(stmt,pos,ptr)                                          (LOGWHERE,_wociDefineDateByPos(stmt,pos,ptr)                                           )
+#define wociBreakAndReset(stmt)                                                    (LOGWHERE,_wociBreakAndReset(stmt)                                                     )
+#define wociExecute(stmt,times)                                                    (LOGWHERE,_wociExecute(stmt,times)                                                     )
+#define wociExecuteAt(stmt,times,offset)                                           (LOGWHERE,_wociExecuteAt(stmt,times,offset)                                            )
+#define wociFetch(stmt,rows)                                                       (LOGWHERE,_wociFetch(stmt,rows)                                                        )
+#define wociGetStmtColumnsNum(stmt)                                                (LOGWHERE,_wociGetStmtColumnsNum(stmt)                                                 )
+#define wociGetMtColumnsNum(mt)                                                    (LOGWHERE,_wociGetMtColumnsNum(mt)                                                     )
+#define wociGetFetchedRows(stmt)                                                   (LOGWHERE,_wociGetFetchedRows(stmt)                                                    )
+#define wociGetSession(stmt)                                                       (LOGWHERE,_wociGetSession(stmt)                                                        )
+#define wociGetStmtType(stmt)                                                      (LOGWHERE,_wociGetStmtType(stmt)                                                       )
+#define wociPrepareStmt(stmt,sqlstmt)                                              (LOGWHERE,_wociPrepareStmt(stmt,sqlstmt)                                               )
+#define wociGetCreateTableSQL(memtab,buf,tabname,ismysql)                          (LOGWHERE,_wociGetCreateTableSQL(memtab,buf,tabname,ismysql)                           )
+#define wociCreateMemTable()                                                       (LOGWHERE,_wociCreateMemTable()                                                        )
+#define wociAddColumn(memtab,name,dspname,ctype,length,scale)                      (LOGWHERE,_wociAddColumn(memtab,name,dspname,ctype,length,scale)                       )
+#define wociBuildStmt(memtab,stmt,rows)                                            (LOGWHERE,_wociBuildStmt(memtab,stmt,rows)                                             )
+#define wociBuild(memtab,rows)                                                     (LOGWHERE,_wociBuild(memtab,rows)                                                      )
+#define wociClear(memtab)                                                          (LOGWHERE,_wociClear(memtab)                                                           )
+#define wociAppendToDbTable(memtab,tablename,sess,autocommit)                      (LOGWHERE,_wociAppendToDbTable(memtab,tablename,sess,autocommit)                       )
+#define wociFetchAll(memtab)                                                       (LOGWHERE,_wociFetchAll(memtab)                                                        )
+#define wociFetchFirst(memtab,rows)                                                (LOGWHERE,_wociFetchFirst(memtab,rows)                                                 )
+#define wociFetchAt(memtab,rows,st)                                                (LOGWHERE,_wociFetchAt(memtab,rows,st)                                              )
+#define wociFetchNext(memtab,rows)                                                 (LOGWHERE,_wociFetchNext(memtab,rows)                                                  )
+#define wociGeneTable(memtab,tablename,sess)                                       (LOGWHERE,_wociGeneTable(memtab,tablename,sess)                                        )
+#define wociSetMTName(memtab,mtname)                                               (LOGWHERE,_wociSetMTName(memtab,mtname)                                                )
+#define wociGetStrAddrByName(memtab,col,rowst,pstr,celllen)                        (LOGWHERE,_wociGetStrAddrByName(memtab,col,rowst,pstr,celllen)                         )
+#define wociGetDateAddrByName(memtab,col,rowst,pstr)                               (LOGWHERE,_wociGetDateAddrByName(memtab,col,rowst,pstr)                                )
+#define wociGetDoubleAddrByName(memtab,col,rowst,pstr)                             (LOGWHERE,_wociGetDoubleAddrByName(memtab,col,rowst,pstr)                              )
+#define wociGetIntAddrByName(memtab,col,rowst,pstr)                                (LOGWHERE,_wociGetIntAddrByName(memtab,col,rowst,pstr)                                 )
+#define wociGetStrValByName(memtab,col,rowst,pstr)                                 (LOGWHERE,_wociGetStrValByName(memtab,col,rowst,pstr)                                  )
+#define wociGetDateValByName(memtab,col,rowst,pstr)                                (LOGWHERE,_wociGetDateValByName(memtab,col,rowst,pstr)                                 )
+#define wociGetDoubleValByName(memtab,col,rowst)                                   (LOGWHERE,_wociGetDoubleValByName(memtab,col,rowst)                                    )
+#define wociGetIntValByName(memtab,col,rowst)                                      (LOGWHERE,_wociGetIntValByName(memtab,col,rowst)                                       )
+#define wociGetStrAddrByPos(memtab,col,rowst,pstr,celllen)                         (LOGWHERE,_wociGetStrAddrByPos(memtab,col,rowst,pstr,celllen)                          )
+#define wociGetDateAddrByPos(memtab,col,rowst,pstr)                                (LOGWHERE,_wociGetDateAddrByPos(memtab,col,rowst,pstr)                                 )
+#define wociGetDoubleAddrByPos(memtab,col,rowst,pstr)                              (LOGWHERE,_wociGetDoubleAddrByPos(memtab,col,rowst,pstr)                               )
+#define wociGetIntAddrByPos(memtab,col,rowst,pstr)                                 (LOGWHERE,_wociGetIntAddrByPos(memtab,col,rowst,pstr)                                  )
+#define wociGetBufferLen(memtab)                                                   (LOGWHERE,_wociGetBufferLen(memtab)                                                    )
+#define wociGetCell(memtab,row,col,str,rawpos)                                     (LOGWHERE,_wociGetCell(memtab,row,col,str,rawpos)                                      )
+#define wociGetColumnDisplayWidth(memtab,col)                                      (LOGWHERE,_wociGetColumnDisplayWidth(memtab,col)                                       )
+#define wociGetColumnPosByName(memtab,colname)                                     (LOGWHERE,_wociGetColumnPosByName(memtab,colname)                                      )
+#define wociGetColumnName(memtab,id,colname)                                       (LOGWHERE,_wociGetColumnName(memtab,id,colname)                                        )
+#define wociGetColumnDataLenByPos(memtab,colid)                                    (LOGWHERE,_wociGetColumnDataLenByPos(memtab,colid)                                     )
+#define wociGetColumnNumber(memtab)                                                (LOGWHERE,_wociGetColumnNumber(memtab)                                                 )
+#define wociGetColumnScale(memtab,colid)                                           (LOGWHERE,_wociGetColumnScale(memtab,colid)                                            )
+#define wociGetColumnTitle(memtab,colid,str,len)                                   (LOGWHERE,_wociGetColumnTitle(memtab,colid,str,len)                                    )
+#define wociGetColumnType(memtab,colid)                                            (LOGWHERE,_wociGetColumnType(memtab,colid)                                             )
+#define wociGetLine(memtab,row,str,rawpos,colsnm)                                  (LOGWHERE,_wociGetLine(memtab,row,str,rawpos,colsnm,NULL)                              )
+#define wociGetCompactLine(memtab,row,str,rawpos,colsnm,clen)                      (LOGWHERE,_wociGetLine(memtab,row,str,rawpos,colsnm,clen)                              ) 
+#define wociGetCompactLen(memtab,row,str,rawpos,colsnm,clen)                       (LOGWHERE,_wociGetCompactLen(memtab,row,str,rawpos,colsnm,clen)                        )       
+#define wociGetCompactTitle(memtab,str,len,colsnm,clen)                            (LOGWHERE,_wociGetTitle(memtab,str,len,colsnm,clen)                                    )  
+#define wociGetMemtableRows(memtab)                                                (LOGWHERE,_wociGetMemtableRows(memtab)                                                 )
+#define wociGetTitle(memtab,str,len,colsnm)                                        (LOGWHERE,_wociGetTitle(memtab,str,len,colsnm,NULL)                                    )
+#define wociIsIKSet(memtab)                                                        (LOGWHERE,_wociIsIKSet(memtab)                                                         )
+#define wociOrderByIK(memtab)                                                      (LOGWHERE,_wociOrderByIK(memtab)                                                       )
+#define wociSearchIK(memtab,key)                                                   (LOGWHERE,_wociSearchIK(memtab,key)                                                    )
+#define wociSearchIKLE(memtab,key)                                                 (LOGWHERE,_wociSearchIKLE(memtab,key)                                                  )
+#define wociSetColumnDisplayName(memtab,colnm,str)                                 (LOGWHERE,_wociSetColumnDisplayName(memtab,colnm,str)                                  )
+#define wociSetIKByName(memtab,str)                                                (LOGWHERE,_wociSetIKByName(memtab,str)                                                 )
+#define wociSetSortColumn(memtab,colsnm)                                           (LOGWHERE,_wociSetSortColumn(memtab,colsnm)                                            )
+#define wociReInOrder(memtab)                                                      (LOGWHERE,_wociReInOrder(memtab)                                                       )
+#define wociSetStrValues(memtab,colid,rowstart,rownum,bf)                          (LOGWHERE,_wociSetStrValues(memtab,colid,rowstart,rownum,bf)                           )
+#define wociSetDateValues(memtab,colid,rowstart,rownum,bf)                         (LOGWHERE,_wociSetDateValues(memtab,colid,rowstart,rownum,bf)                          )
+#define wociSetDoubleValues(memtab,colid,rowstart,rownum,bf)                       (LOGWHERE,_wociSetDoubleValues(memtab,colid,rowstart,rownum,bf)                        )
+#define wociSetIntValues(memtab,colid,rowstart,rownum,bf)                         (LOGWHERE,_wociSetIntValues(memtab,colid,rowstart,rownum,bf)                          )
+#define wociSort(memtab)                                                           (LOGWHERE,_wociSort(memtab)                                                            )
+#define wociSortHeap(memtab)                                                       (LOGWHERE,_wociSortHeap(memtab)                                                        )
+#define wociSetGroupSrc(memtab,src)                                                (LOGWHERE,_wociSetGroupSrc(memtab,src)                                                 )
+#define wociSetIKGroupRef(memtab,ref,colnm)                                        (LOGWHERE,_wociSetIKGroupRef(memtab,ref,colnm)                                         )
+#define wociSetGroupSrcCol(memtab,colsnm)                                          (LOGWHERE,_wociSetGroupSrcCol(memtab,colsnm)                                           )
+#define wociSetGroupRefCol(memtab,colsnm)                                          (LOGWHERE,_wociSetGroupRefCol(memtab,colsnm)                                           )
+#define wociSetSrcSumCol(memtab,colsnm)                                            (LOGWHERE,_wociSetSrcSumCol(memtab,colsnm)                                             )
+#define wociGroup(memtab,rowstart,rownum)                                          (LOGWHERE,_wociGroup(memtab,rowstart,rownum)                                           )
+#define wociCopyRowsTo(memtab,memtabto,toStart,start,rowsnum)                      (LOGWHERE,_wociCopyRowsTo(memtab,memtabto,toStart,start,rowsnum)                       )
+#define wociGetColumnDesc(memtab,pColDesc,cdlen,_colnm)                            (LOGWHERE,_wociGetColumnDesc(memtab,pColDesc,cdlen,_colnm)                             )
+#define wociCopyColumnDefine(memtab,memtabfrom,colsname)                           (LOGWHERE,_wociCopyColumnDefine(memtab,memtabfrom,colsname)                            )
+#define wociExportSomeRows(memtab,pData,startrn,rnnum)                             (LOGWHERE,_wociExportSomeRows(memtab,pData,startrn,rnnum)                              )
+#define wociExport(memtab,pData,_len,_maxrows,_rowct)                              (LOGWHERE,_wociExport(memtab,pData,_len,_maxrows,_rowct)                               )
+#define wociImport(memtab,pData,_len,pColDesc,_colnm,_cdlen,_maxrows,_rowct)       (LOGWHERE,_wociImport(memtab,pData,_len,pColDesc,_colnm,_cdlen,_maxrows,_rowct)        )
+#define wociAppendRows(memtab,pData,rnnum)                                         (LOGWHERE,_wociAppendRows(memtab,pData,rnnum)                                          )
+#define wociReset(memtab)                                                          (LOGWHERE,_wociReset(memtab)                                                           )
+#define wociClearIK(memtab)                                                        (LOGWHERE,_wociClearIK(memtab)                                                         )
+#define wociClearSort(memtab)                                                      (LOGWHERE,_wociClearSort(memtab)                                                       )
+#define wociGetMaxRows(memtab)                                                     (LOGWHERE,_wociGetMaxRows(memtab)                                                      )
+#define wociCompact(memtab)                                                        (LOGWHERE,_wociCompact(memtab)                                                         )
+#define wociGetRowLen(memta)                                                       (LOGWHERE,_wociGetRowLen(memta)                                                        )
+#define wociCreateExcelEnv()                                                       (LOGWHERE,_wociCreateExcelEnv()                                                        )
+#define wociSetDir(excel,strTemplate,strReport)                                    (LOGWHERE,_wociSetDir(excel,strTemplate,strReport)                                     )
+#define wociSetMemTable(excel,memtab)                                              (LOGWHERE,_wociSetMemTable(excel,memtab)                                               )
+#define wociLoadTemplate(excel,tempname)                                           (LOGWHERE,_wociLoadTemplate(excel,tempname)                                            )
+#define wociSelectSheet(excel,sheetname)                                           (LOGWHERE,_wociSelectSheet(excel,sheetname)                                            )
+#define wociFillData(excel,tocol, torow, fromcol, fromrow, colnum, rownum,rawpos)  (LOGWHERE,_wociFillData(excel,tocol, torow, fromcol, fromrow, colnum, rownum,rawpos)   )
+#define wociFillTitle(excel,tocol,torow,fromcol,colnum)                            (LOGWHERE,_wociFillTitle(excel,tocol,torow,fromcol,colnum)                             )
+#define wociSaveAs(excel,filename)                                                 (LOGWHERE,_wociSaveAs(excel,filename)                                                  )
+#define wociGetMemUsed(memtab)                                                     (LOGWHERE,_wociGetMemUsed(memtab)                                                      )
+#define wociSetSortedGroupRef(memtab,mtref, colssrc)                               (LOGWHERE,_wociSetSortedGroupRef(memtab,mtref, colssrc)                                )
+#define wociSearch(memtab,ptr)                                                     (LOGWHERE,_wociSearch(memtab,ptr)                                                      )
+#define wociSearchLE(memtab,ptr)                                                   (LOGWHERE,_wociSearchLE(memtab,ptr)                                                    )
+#define wociValuesSet(memtab,mtsrc,colto,colfrom,usedestKey,op)                    (LOGWHERE,_wociValuesSet(memtab,mtsrc,colto,colfrom,usedestKey,op)                     )
+#define wociDeleteRow(memtab,rown)                                                 (LOGWHERE,_wociDeleteRow(memtab,rown)                                                  )
+#define wociInsertRows(memtab,ptr,colsname,num)                                    (LOGWHERE,_wociInsertRows(memtab,ptr,colsname,num)                                     )
+#define wociBindToStatment(memtab,stmt,colsname,rowst)                             (LOGWHERE,_wociBindToStatment(memtab,stmt,colsname,rowst)                              )
+#define wociTestTable(sess,tablename)                                              (LOGWHERE,_wociTestTable(sess,tablename)                                               )
+#define wociGetRawrnBySort(memtab,ind)                                             (LOGWHERE,_wociGetRawrnBySort(memtab,ind)                                              )
+#define wociGetRawrnByIK(memtab,ind)                                               (LOGWHERE,_wociGetRawrnByIK(memtab,ind)                                                )
+#define wociCompressBf(memtab)                                                     (LOGWHERE,_wociCompressBf(memtab)                                                      )
+#define wociSearchQDel(memtab,key,schopt)                                          (LOGWHERE,_wociSearchQDel(memtab,key,schopt)                                           )
+#define wociIsQDelete(memtab,rownm)                                                (LOGWHERE,_wociIsQDelete(memtab,rownm)                                                 )
+#define wociQDeletedRows(memtab)                                                   (LOGWHERE,_wociQDeletedRows(memtab)                                                    )
+#define wociQDeleteRow(memtab,rownm)                                               (LOGWHERE,_wociQDeleteRow(memtab,rownm)                                                )
+#define wociWaitStmt(stmt)                                                         (LOGWHERE,_wociWaitStmt(stmt)                                                          )
+#define wociWaitMemtable(memtab)                                                   (LOGWHERE,_wociWaitMemtable(memtab)                                                    )
+#define wociWaitLastReturn(handle)                                                 (LOGWHERE,_wociWaitLastReturn(handle)                                                  )
+#define wociWaitTime(handle,time)                                                  (LOGWHERE,_wociWaitTime(handle,time)                                                   )
+#define wociFreshRowNum(memtab)                                                    (LOGWHERE,_wociFreshRowNum(memtab)                                                     )
+#define wociBatchSelect(result,param,colsnm)                                       (LOGWHERE,_wociBatchSelect(result,param,colsnm)                                        )
+#define wociMTPrint(memtab,rownm,colsnm)                                           (LOGWHERE,_wociMTPrint(memtab,rownm,colsnm,false)                                      )
+#define wociMTCompactPrint(memtab,rownm,colsnm)                                    (LOGWHERE,_wociMTPrint(memtab,rownm,colsnm,true)                                       )    
+#define wociGetCurDateTime(date)                                                   (LOGWHERE,_wociGetCurDateTime(date)                                                    )
+#define wociSetDateTime(date,year,mon,day,hour,min,sec)                            (LOGWHERE,_wociSetDateTime(date,year,mon,day,hour,min,sec)                             )
+#define wociSetDate(date,year,mon,day)                                             (LOGWHERE,_wociSetDate(date,year,mon,day)                                              )
+#define wociDateTimeToStr(date,str)                                                (LOGWHERE,_wociDateTimeToStr(date,str)                                                 )
+#define wociGetYear(date)                                                          (LOGWHERE,_wociGetYear(date)                                                           )
+#define wociGetMonth(date)                                                         (LOGWHERE,_wociGetMonth(date)                                                          )
+#define wociGetDay(date)                                                           (LOGWHERE,_wociGetDay(date)                                                            )
+#define wociGetHour(date)                                                          (LOGWHERE,_wociGetHour(date)                                                           )
+#define wociGetMin(date)                                                           (LOGWHERE,_wociGetMin(date)                                                            )
+#define wociGetSec(date)                                                           (LOGWHERE,_wociGetSec(date)                                                            )
+#define wociSetEcho(val)                                                           (LOGWHERE,_wociSetEcho(val)                                                            )
+#define wociIsEcho()                                                               (LOGWHERE,_wociIsEcho()                                                            )
+#define wociMTToTextFile(memtab,fn,rownm,colsnm)                                   (LOGWHERE,_wociMTToTextFile(memtab,fn,rownm,colsnm)                                    )
+#define wociGetMTName(memtab,bf)                                                   (LOGWHERE,_wociGetMTName(memtab,bf)                                                    )
+#define wociReadFromTextFile(memtab,fn,rowst,rownm)                                (LOGWHERE,_wociReadFromTextFile(memtab,fn,rowst,rownm)                                 )
+#define wociFetchAllAt(memtab,st)                                                  (LOGWHERE,_wociFetchAllAt(memtab,st)                                                   )
+#define wociDateDiff(d1,d2)                                                        (LOGWHERE,_wociDateDiff(d1,d2)                                                         )
+#define wociSetOutputToConsole(val)                                                (LOGWHERE,_wociSetOutputToConsole(val)                                                 )
+#define wociSetTraceFile(fn)                                             (LOGWHERE,_wociSetTraceFile(fn)                                              )
+#define wociSetErrorFile(fn)                                                       (LOGWHERE,_wociSetErrorFile(fn)                                                        )
+#define wociSetLogFile(fn)                                                         (LOGWHERE,_wociSetLogFile(fn)                                                          )
+#define WOCIInit(appname)                                                          (LOGWHERE,_WOCIInit(appname)                                                           )
+#define WOCIQuit()                                                                 (LOGWHERE,_WOCIQuit()                                                                  )
+#define wociReplaceStmt(memtab,stmt)                                               (LOGWHERE,_wociReplaceStmt(memtab,stmt)                                                )
+#define wociConvertColStrToInt(memtab,colsn,pcol)                                  (LOGWHERE,_wociConvertColStrToInt(memtab,colsn,pcol)                                   )
+#define wociSaveSort(memtab,fp)                                                    (LOGWHERE,_wociSaveSort(memtab,fp)                                                     )
+#define wociLoadSort(memtab,fp)                                                    (LOGWHERE,_wociLoadSort(memtab,fp)                                                     )
+#define wociCopyToMySQL(memtab,startrow,rownum,fp)                                 (LOGWHERE,_wociCopyToMySQL(memtab,startrow,rownum,fp)                                  )
+#define wociCompareSortRow(memtab,row1, row2)                                      (LOGWHERE,_wociCompareSortRow(memtab,row1, row2)                                       )
+#define wociList(pout)                                                             (LOGWHERE,_wociList(pout)                                                              )
+#define wociGetLastError(handle)                                                   (LOGWHERE,_wociGetLastError(handle)                                                    )
+#define wociAddrFresh(memtab,colval,collen,tp)                                     (LOGWHERE,_wociAddrFresh(memtab,colval,collen,tp)                                      )
+#define wociGetColumnInfo(mt,crttab,ismysql)                               	   (LOGWHERE,_wociGetColumnInfo(mt,crttab,ismysql)                                     	  )
+#endif
+
+void _wocilogwhere(const char *fn,int ln);
+//Catch level : 0 -- no catch 1--catch WOCIError 2--catch 'WOCIError' and 'int'
+//  and 'char *' exceptions
+int _wociMainEntrance(int (*func)(void *),bool asyncmode,void *ptr,int catchLevel);
+ int _wocidestroy(int handle) ;
+ int _wociDestroyAll();
+ void _wociBreakAll();
+//////////////////////////////////////////////////////////////////
+// Session function(6) . 
+//
+//
+//////////////////////////////////////////////////////////////////
+ int _wociCreateSession(const char *username,const char *password,const char *svcname) ;
+ int _wociCommit(int sess) ;
+ int _wociRollback(int sess) ;
+ int _wociSetTerminate(int sess,bool val) ;
+ bool _wociIsTerminate(int sess) ;
+ bool _wociSetNonBlockMode(int sess) ;
+
+//////////////////////////////////////////////////////////////////
+// Statment function (18). 
+//
+//
+//////////////////////////////////////////////////////////////////
+ int _wociCreateStatment(int sess) ;
+ bool _wociBindStrByPos(int stmt,int pos,char *ptr,int len) ;
+ bool _wociBindDoubleByPos(int stmt,int pos,double *ptr) ;
+ bool _wociBindIntByPos(int stmt,int pos,int *ptr) ;
+ bool _wociBindDateByPos(int stmt,int pos,char *ptr) ;
+ bool _wociDefineStrByPos(int stmt,int pos,char *ptr,int len) ;
+ bool _wociDefineDoubleByPos(int stmt,int pos,double *ptr) ;
+ bool _wociDefineIntByPos(int stmt,int pos,int *ptr) ;
+ bool _wociDefineDateByPos(int stmt,int pos,char *ptr);
+ int _wociBreakAndReset(int stmt) ;
+ int _wociExecute(int stmt,int times) ;
+ int _wociExecuteAt(int stmt,int times,int offset) ;
+ int _wociFetch(int stmt,int rows) ;
+ int _wociGetStmtColumnsNum(int stmt) ;
+ int _wociGetMtColumnsNum(int mt) ;
+ //int _wociGetColumnsNum(int stmt) ;
+ int _wociGetFetchedRows(int stmt) ;
+ int _wociGetSession(int stmt) ;
+ unsigned short _wociGetStmtType(int stmt) ;
+ bool _wociPrepareStmt(int stmt,char *sqlstmt) ;
+ int _wociGetCreateTableSQL(int memtab,char *buf,const char *tabname,bool ismysql) ;
+//////////////////////////////////////////////////////////////////
+// MemTable function (43). 
+//
+//
+//////////////////////////////////////////////////////////////////
+ int _wociCreateMemTable() ;
+ bool _wociAddColumn(int memtab,char *name,char *dspname,int ctype,int length,int scale) ;
+ bool _wociBuildStmt(int memtab,int stmt,unsigned int rows);
+ BOOL _wociBuild(int memtab,unsigned int rows);
+ void _wociClear(int memtab) ;
+ BOOL _wociAppendToDbTable(int memtab,char *tablename,int sess,bool autocommit) ;
+ unsigned int _wociFetchAll(int memtab) ;
+ unsigned int _wociFetchFirst(int memtab,unsigned int rows) ;
+ unsigned int _wociFetchNext(int memtab,unsigned int rows) ;
+ unsigned int _wociFetchAt(int memtab,unsigned int rows,int st) ;
+ bool _wociGeneTable(int memtab,char *tablename,int sess) ;
+ void _wociSetMTName(int memtab,char *mtname) ;
+ int _wociGetStrAddrByName(int memtab,char *col,unsigned int rowst,char **pstr,int *celllen) ;
+ int _wociGetDateAddrByName(int memtab,char *col,unsigned int rowst,char **pstr) ;
+ int _wociGetDoubleAddrByName(int memtab,char *col,unsigned int rowst,double **pstr);
+ int _wociGetIntAddrByName(int memtab,char *col,unsigned int rowst,int **pstr) ;
+ 
+ int _wociGetStrValByName(int memtab,char *col,unsigned int rowst,char *pstr) ;
+ int _wociGetDateValByName(int memtab,char *col,unsigned int rowst,char *pstr) ;
+ double _wociGetDoubleValByName(int memtab,char *col,unsigned int rowst);
+ int _wociGetIntValByName(int memtab,char *col,unsigned int rowst) ;
+
+ int _wociGetStrAddrByPos(int memtab,int col,unsigned int rowst,char **pstr,int *celllen) ;
+ int _wociGetDateAddrByPos(int memtab,int col,unsigned int rowst,char **pstr) ;
+ int _wociGetDoubleAddrByPos(int memtab,int col,unsigned int rowst,double **pstr);
+ int _wociGetIntAddrByPos(int memtab,int col,unsigned int rowst,int **pstr) ;
+ 
+ int _wociGetBufferLen(int memtab) ;
+ bool _wociGetCell(int memtab,unsigned int row,int col,char *str,bool rawpos) ;
+ int _wociGetColumnDisplayWidth(int memtab,int col) ;
+ int _wociGetColumnPosByName(int memtab,char *colname);
+ int _wociGetColumnName(int memtab,int id,char *colname);
+ int _wociGetColumnDataLenByPos(int memtab,int colid);
+ int _wociGetColumnNumber(int memtab);
+ int _wociGetColumnScale(int memtab,int colid);
+ void _wociGetColumnTitle(int memtab,int colid,char *str,int len);
+ short _wociGetColumnType(int memtab,int colid);
+ bool _wociGetLine(int memtab,unsigned int row,char *str,bool rawpos,char *colsnm,int *clen);
+ int _wociGetMemtableRows(int memtab);
+ void _wociGetTitle(int memtab,char *str,int len,char *colsnm,int *clen);
+ bool _wociIsIKSet(int memtab) ;
+ bool _wociOrderByIK(int memtab);
+ int _wociSearchIK(int memtab,int key);
+ int _wociSearchIKLE(int memtab,int key);
+ void _wociSetColumnDisplayName(int memtab,char *colnm,char *str);
+ bool _wociSetIKByName(int memtab,char *str) ;
+ bool _wociSetSortColumn(int memtab,char *colsnm) ;
+ void _wociReInOrder(int memtab);
+ int _wociSetStrValues(int memtab,int colid,unsigned int rowstart,unsigned int rownum,char *bf) ;
+ int _wociSetDateValues(int memtab,int colid,unsigned int rowstart,unsigned int rownum,char *bf) ;
+ int _wociSetDoubleValues(int memtab,int colid,unsigned int rowstart,unsigned int rownum,double *bf);
+ int _wociSetIntValues(int memtab,int colid,unsigned int rowstart,unsigned int rownum,int *bf) ;
+ bool _wociSort(int memtab) ;
+ bool _wociSortHeap(int memtab) ;
+//*  Group Functions (6)***************************************/
+ bool _wociSetGroupSrc(int memtab,int src) ;
+ bool _wociSetIKGroupRef(int memtab,int ref,char *colnm) ;
+ bool _wociSetGroupSrcCol(int memtab,char *colsnm) ;
+ bool _wociSetGroupRefCol(int memtab,char *colsnm) ;
+ bool _wociSetSrcSumCol(int memtab,char *colsnm) ;
+ bool _wociGroup(int memtab,int rowstart,int rownum);
+ bool _wociCopyRowsTo(int memtab,int memtabto,int toStart,int start,int rowsnum);
+ bool _wociGetColumnDesc(int memtab,void **pColDesc,int &cdlen,int &_colnm) ;
+ bool _wociCopyColumnDefine(int memtab,int memtabfrom,const char *colsname);
+ bool _wociExportSomeRows(int memtab,char *pData,int startrn,int rnnum);
+ bool _wociExport(int memtab,void *pData,int &_len,int &_maxrows,int &_rowct) ;
+BOOL _wociImport(int memtab,void *pData,int _len,void *pColDesc,int _colnm,int _cdlen,int _maxrows,int _rowct);
+ BOOL _wociAppendRows(int memtab,char *pData,int rnnum); 
+ 	//保留表结构，清除索引结构，数据行数置零
+ void _wociReset(int memtab) ;
+ void _wociClearIK(int memtab) ;
+ void _wociClearSort(int memtab) ;
+int _wociGetMaxRows(int memtab); 
+ bool _wociCompact(int memtab);
+ int _wociGetRowLen(int memta);
+//////////////////////////////////////////////////////////////////
+// ExcelEnv function(7) . 
+//
+//
+//////////////////////////////////////////////////////////////////
+ int _wociCreateExcelEnv() ;
+ void _wociSetDir(int excel,char *strTemplate,char *strReport);
+ void _wociSetMemTable(int excel,int memtab);
+ bool _wociLoadTemplate(int excel,char *tempname);
+ bool _wociSelectSheet(int excel,char *sheetname) ;
+ bool _wociFillData(int excel,unsigned int tocol, unsigned int torow, unsigned int fromcol, unsigned int fromrow, unsigned int colnum, unsigned int rownum,bool rawpos) ;
+ bool _wociFillTitle(int excel,unsigned int tocol,unsigned int torow,unsigned int fromcol,unsigned int colnum);
+ bool _wociSaveAs(int excel,char *filename) ;
+
+ int _wociGetMemUsed(int memtab);
+ bool _wociSetSortedGroupRef(int memtab,int mtref, char *colssrc);
+ int  _wociSearch(int memtab,void **ptr);
+ int  _wociSearchLE(int memtab,void **ptr);
+ bool _wociValuesSet(int memtab,int mtsrc,char *colto,char *colfrom,bool usedestKey,int op);
+ bool _wociDeleteRow(int memtab,int rown) ;
+ bool _wociInsertRows(int memtab,void **ptr,char *colsname,int num);
+ bool _wociBindToStatment(int memtab,int stmt,char *colsname,int rowst);
+ int _wociTestTable(int sess,char *tablename);
+ int _wociGetRawrnBySort(int memtab,int ind);
+ int _wociGetRawrnByIK(int memtab,int ind);
+ bool _wociCompressBf(int memtab);
+ int _wociSearchQDel(int memtab,int key,int schopt);
+ bool _wociIsQDelete(int memtab,int rownm);
+ int _wociQDeletedRows(int memtab);
+ bool _wociQDeleteRow(int memtab,int rownm);
+ void _wociWaitStmt(int stmt);
+ void _wociWaitMemtable(int memtab);
+ int _wociWaitLastReturn(int handle);
+ int _wociWaitTime(int handle,int time);
+ bool _wociFreshRowNum(int memtab);
+ int _wociBatchSelect(int result,int param,char *colsnm);
+ void _wociMTPrint(int memtab,int rownm,char *colsnm,bool compact) ;
+void _wociGetCompactLen(int memtab,int rowstart,int rownum,char *colsnm,int *clen);
+void _wociGetCurDateTime(char *date) ;
+//Parametes: year(four digits),month(1-12),day(1-31),hour(0-23),minute(0-59),second(0-59).
+// return a new datatime handle
+void _wociSetDateTime(char *date,int year,int mon,int day,int hour,int min,int sec) ;
+//Parameters:year,month,day ; hour,minute,second will be set to zero.
+// return a new datetime handle
+void _wociSetDate(char *date,int year,int mon,int day);
+//Format : yyyy/mm/dd hh24:mi:ss
+void _wociDateTimeToStr(char *date,char *str) ;
+int _wociGetYear(char *date) ;
+int _wociGetMonth(char *date);
+int _wociGetDay(char *date) ;
+int _wociGetHour(char *date) ;
+int _wociGetMin(char *date) ;
+int _wociGetSec(char *date) ;
+void _wociSetEcho(bool val);
+bool _wociIsEcho();
+void _wociMTToTextFile(int memtab,char *fn,int rownm,char *colsnm) ;
+void _wociGetMTName(int memtab,char *bf);
+int _wociReadFromTextFile(int memtab,char *fn,int rowst,int rownm);
+unsigned int _wociFetchAllAt(int memtab,int st) ;
+int _wociDateDiff(char *d1,char *d2);
+void _wociSetOutputToConsole(bool val);
+void _wociSetTraceFile(const char *fn); 
+void _wociSetErrorFile(const char *fn);
+void _wociSetLogFile(const char *fn);
+int errprintf(const char *format,...) ;
+int lgprintf(const char *format,...) ;
+void _WOCIInit(char *appname);
+void _WOCIQuit();
+bool _wociReplaceStmt(int memtab,int stmt);
+int _wociConvertColStrToInt(int memtab,const char *colsn,int *pcol);
+int _wociSaveSort(int memtab,FILE *fp);
+int _wociLoadSort(int memtab,FILE *fp);
+void _wociCopyToMySQL(int memtab,unsigned int startrow,
+			unsigned int rownum,FILE *fp);
+int _wociCompareSortRow(int memtab,unsigned int row1, unsigned int row2);
+void _wociList(char *pout);
+int _wociGetLastError(int handle);
+void _wociAddrFresh(int memtab,char **colval,int *collen,int *tp);
+int _wociGetColumnInfo(int mt,char *crttab,bool ismysql);
+// End of file _woci8intface.h
+
+#endif
+
+
+#endif

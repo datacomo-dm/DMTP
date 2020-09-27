@@ -1,0 +1,24 @@
+LDFLAGS= -AA +z +DD64 -b -L$(DATAMERGER_HOME)/lib -L$(DATAMERGER_HOME)/oci -L$(DATAMERGER_HOME)/lib/mysql -lpthread -lm -lwdbi -ldpiosh
+OCILIB= -lclntsh 
+INCLUDE= -I$(DBPLUSSRC_PATH)/inc -I$(DBPLUSSRC_PATH)/inc/oci -I$(DBPLUSSRC_PATH)/inc/unix_odbc -I$(DBPLUSSRC_PATH)/inc/mysql
+SOURCE=cmnet_parser.cc
+OBJS=cmnet_parser.o
+CXX = aCC 
+CFLAGS =  -O3 +Onoinitcheck +u1 +DD64 +z -AA -D_RWSTD_MINIMUM_NEW_CAPACITY=1 -DAVL_TREE_FIX_MEM -DPIC -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE $(INCLUDE) 
+CMNETLIB=libcmnet_parser.so
+
+
+all: $(CMNETLIB) 
+
+$(CMNETLIB):
+	echo "Build CMNet parser library."
+	rm -f $(OBJS) $@
+	$(CXX) -c $(SOURCE) $(CFLAGS) $(INCLUDE)
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@
+	rm -f ../lib/$@ ../lib/$(CMNETLIB)
+	cp $@ ../lib
+	cp $@ $(DATAMERGER_HOME)/plugin
+	
+
+clean :
+	rm -f $(OBJS) $(CMNETLIB)

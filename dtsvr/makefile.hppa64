@@ -1,0 +1,26 @@
+#LFLAGS= -lwdbi -lm -lrt -lpthread  -ldtiosh -lbz2 -llzo -lz -lucl -ldpodbc3-3.51.06
+LFLAGS= +DD64 -lwdbi -lm -lrt -lpthread -ldpiosh -lbz2 -llzo2 -lz -lucl 
+#-lodbc 
+#LFLAGS= -lwoci8sh -lm -lclntsh -lbz2 -lrt -llzo -lz -lpthread -lmysqlclient -lstdc++
+LDFLAGS=  +DD64 -AA -L$(DATAMERGER_HOME)/lib -L$(DATAMERGER_HOME)/lib/mysql -L$(DATAMERGER_HOME)/lib -L$(DATAMERGER_HOME)/oci -L$(DBPLUSSRC_PATH)/lib 
+INCLUDE= -I$(DBPLUSSRC_PATH)/inc -I$(DBPLUSSRC_PATH)/inc/mysql
+#SOURCE=dt_test.cpp 
+#OBJS=dt_test.o 
+SOURCE=dt_check.cpp dt_lib.cpp dumpfile.cpp
+OBJS=dt_check.o dt_lib.o dumpfile.o
+CXX = aCC 
+TARGET = dpadmin
+# -DWORDS_BIGENDIAN
+# -Wall display all level of compiling info. -O given an optimization level for intrinsics functions
+CFLAGS =   +DD64 -O3  -AA  +u1 -D__std_plugin_sym__ -D_RWSTD_MINIMUM_NEW_CAPACITY=1 -DWORDS_BIGENDIAN -D__unix -DB_TIME_FORMAT -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DUSE_WDBI -DMYSQL_VER_51 
+#CFLAGS = -O3 -pthread
+
+$(TARGET): $(OBJS) 
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@  $(LFLAGS)
+	cp $@ $(DATAMERGER_HOME)/bin 
+
+$(OBJS): $(SOURCE) 
+	$(CXX) $(CFLAGS) $(INCLUDE) -c $(SOURCE) 
+
+clean:
+	rm -f $(OBJS) $(TARGET)

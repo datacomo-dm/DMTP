@@ -1,0 +1,17 @@
+LFLAGS= -Wl,-brtl -maix64 -ldpio -lwdbi -lrt -lm -lpthread -lclntsh -lmysqlclient_r -lz -lbz2 -lucl -llzo2 -lodbc -lmysys -L/app/dm55/lib/mysql -lmystrings
+#-ldpodbc3
+#LDFLAGS= -Wl,-bnolibpath -L/app/dbplus/lib/oci -L$/app/dbplus/lib
+LDFLAGS= -L$(DATAMERGER_HOME)/oci -L$(DATAMERGER_HOME)/lib -L$(DBPLUSSRC_PATH)/lib 
+INCLUDE= -I$(DBPLUSSRC_PATH)/inc
+SOURCE=desc.cc 
+OBJS=desc.o
+CXX = gxlc++
+CFLAGS = -g -DAIX -D__unix -maix64 -DUSE_WDBI -DWOCI_DEBUG
+dpdesc: $(OBJS) 
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@  $(LFLAGS) 
+$(OBJS): $(SOURCE) 
+	$(CXX) $(CFLAGS) $(INCLUDE) -c $(SOURCE) 
+clean:
+	rm -f dpdesc desc.o
+	
+rebuild: clean dpdesc	

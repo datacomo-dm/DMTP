@@ -1,0 +1,75 @@
+#LDFLAGS= -fPIC -fpic -DPIC -shared  -L$(DBPLUSSRC_PATH)/lib -L$(DATAMERGER_HOME)/oci  -lpthread -lm
+# on aix ,user -lstdc++ will cause exception not catched correcttly.
+#LDFLAGS= -Wl,-brtl -maix64  -Wl,-G,-bernotok -Wl,-bnoentry -Wl,-bexpall -lsupc++ -shared  -L$(DATAMERGER_HOME)/lib -L$(DATAMERGER_HOME)/lib/mysql -L$(DBPLUSSRC_PATH)/lib -L$(DATAMERGER_HOME)/oci  -lpthread -lm -lmystrings
+LDFLAGS= -Wl,-brtl -maix64 -shared  -L$(DATAMERGER_HOME)/lib -L$(DATAMERGER_HOME)/lib/mysql -L$(DBPLUSSRC_PATH)/lib -L$(DATAMERGER_HOME)/oci  -lpthread -lm -lmystrings
+OCILIB= -lclntsh 
+#ODBCLIB= -ldpconnect 
+#ODBCLIB= -ldpodbc3-3.51.06 -lmysqlclient_r
+ODBCLIB= -lodbc -lmystrings
+INCLUDE= -I$(DATAMERGER_HOME)/include/mysql -I$(DBPLUSSRC_PATH)/inc -I$(DBPLUSSRC_PATH)/inc/oci -I$(DATAMERGER_HOME)/include
+SOURCE=wdbi_global.cpp wdbi_int.cpp wdbi_main.cpp wociSession.cpp wdbiError.cpp wociStatement.cpp dataTable.cpp memTable.cpp dataTableLink.cpp wodbcSession.cpp wodbcStatement.cpp
+OBJS=wdbi_global.o wdbi_int.o wdbi_main.o wociSession.o wdbiError.o wociStatement.o dataTable.o memTable.o dataTableLink.o wodbcSession.o wodbcStatement.o
+#CC="gcc -pipe -mcpu=power -Wa,-many"
+#CXX="gcc -pipe -mcpu=power -Wa,-many"
+CXX=gxlc++
+#CFLAGS = -O +DD64  -pthread
+#CFLAGS =  -g -fPIC -DPIC -DWORDS_BIGENDIAN $(INCLUDE)
+#CFLAGS = -maix64  -O3 -D__unix -fpic -fPIC -DAVL_TREE_FIX_MEM -DPIC -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE $(INCLUDE) 
+CFLAGS = -O3 -DMYSQL_VER_51  -Wa,-many -DUNIV_AIX -shared -DBUILD_LEGACY_64_BIT_MODE -maix64 -DWDBI64BIT -DWORDS_BIGENDIAN -DPIC -D__unix -DAVL_TREE_FIX_MEM -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE $(INCLUDE)
+#-DHAVE_EXPIRED -DTIME_UPTO=200705
+TARMEM=libwdbi_mem1.2.1.so
+TARODBC=libwdbi_odbc1.2.1.so
+TAROCI=libwdbi_oci1.2.1.so
+TARALL=libwdbi1.2.1.so
+
+TARMEM_S=libwdbimem.so
+TARODBC_S=libwdbiodbc.so
+TAROCI_S=libwdbioci.so
+TARALL_S=libwdbi.so
+
+all: $(TARMEM) $(TARODBC) $(TAROCI) $(TARALL)
+
+$(TARMEM):
+	echo "Build pure memory dbi library."
+	rm -f $(OBJS) $@
+	$(CXX) -DNO_OCI -DNO_ODBC $(CFLAGS)  -c $(SOURCE)
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@
+	rm -f ../lib/$@ ../lib/$(TARMEM_S) $(DATAMERGER_HOME)/lib/$@
+	cp $@ ../lib
+	echo "DATAMERGER_HOME$(DATAMERGER_HOME)"
+	cp $@ $(DATAMERGER_HOME)/lib
+	ln -s $@ ../lib/$(TARMEM_S)
+	
+$(TARODBC):
+	echo "Build dbi library for odbc."
+	rm -f $(OBJS) $@
+	$(CXX) -DNO_OCI $(CFLAGS)  -c $(SOURCE)
+	echo "Link lib.."
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@ $(ODBCLIB)
+	rm -f ../lib/$@ ../lib/$(TARODBC_S) $(DATAMERGER_HOME)/lib/$@
+	cp $@ ../lib
+	cp $@ $(DATAMERGER_HOME)/lib
+	ln -s $@ ../lib/$(TARODBC_S)
+
+$(TAROCI):
+	echo "Build dbi library for oci."
+	rm -f $(OBJS) $@
+	$(CXX) -DNO_ODBC $(CFLAGS)  -c $(SOURCE)
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@ $(OCILIB)
+	rm -f ../lib/$@ ../lib/$(TAROCI_S) $(DATAMERGER_HOME)/lib/$@
+	cp $@ $(DATAMERGER_HOME)/lib
+	cp $@ ../lib
+	ln -s $@ ../lib/$(TAROCI_S)
+	
+$(TARALL): 
+	echo "Build dbi library for odbc&oci."
+	rm -f $(OBJS) $@
+	$(CXX) $(CFLAGS)  -c $(SOURCE)
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@ $(OCILIB) $(ODBCLIB)
+	rm -f ../lib/$@ ../lib/$(TARALL_S) $(DATAMERGER_HOME)/lib/$@
+	cp $@ ../lib
+	cp $@ $(DATAMERGER_HOME)/lib
+	ln -s $@ ../lib/$(TARALL_S)
+
+clean :
+	rm -f $(OBJS) $(TARMEM) $(TARODBC) $(TAROCI) $(TARALL)

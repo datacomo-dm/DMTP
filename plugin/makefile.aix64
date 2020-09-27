@@ -1,0 +1,24 @@
+LDFLAGS= -fPIC -fpic -DPIC -shared -Wl,-brtl -L$(DBPLUSSRC_PATH)/lib -L$(DATAMERGER_HOME)/oci -lpthread -lm -Wl,-bexpall -lwdbi -ldpiosh
+OCILIB= -lclntsh 
+INCLUDE= -I$(DBPLUSSRC_PATH)/inc -I$(DBPLUSSRC_PATH)/inc/oci -I$(DBPLUSSRC_PATH)/inc/unix_odbc -I$(DBPLUSSRC_PATH)/inc/mysql
+SOURCE=cmnet_parser.cc
+OBJS=cmnet_parser.o
+CXX = gxlc++ 
+CFLAGS =  -g -fpic -DAIX -fPIC -DAVL_TREE_FIX_MEM -DPIC -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE $(INCLUDE) 
+CMNETLIB=libcmnet_parser.so
+
+
+all: $(CMNETLIB) 
+
+$(CMNETLIB):
+	echo "Build CMNet parser library."
+	rm -f $(OBJS) $@
+	$(CXX) -c $(SOURCE) $(CFLAGS) $(INCLUDE)
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@
+	rm -f ../lib/$@ ../lib/$(CMNETLIB)
+	cp $@ ../lib
+	cp $@ $(DATAMERGER_HOME)/plugin
+	
+
+clean :
+	rm -f $(OBJS) $(CMNETLIB)

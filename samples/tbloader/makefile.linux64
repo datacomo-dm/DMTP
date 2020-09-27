@@ -1,0 +1,46 @@
+LFLAGS= -ldpiosh -lm -lrt -lz -lpthread -lcrypto -lstdc++ -fpic -fPIC
+LDFLAGS= -m64 -L$(DATAMERGER_HOME)/lib
+INCLUDE= -I$(DBPLUSSRC_PATH)/inc -I$(DBPLUSSRC_PATH)/inc/mysql -I$(DBPLUSSRC_PATH)/inc/oci -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux 
+
+SOURCE_loader=tbloader.cc tbloader_impl.cc tbloader_helper.cc
+OBJS_loader=tbloader.o tbloader_impl.o tbloader_helper.o
+
+SOURCE_exporter=tbexporter.cc tbexport_helper.cc tbloader_impl.cc
+OBJS_exporter=tbexporter.o tbexport_helper.o tbloader_impl.o
+
+SOURCE_loader_so=tbloader_helper.cc tbexport_helper.cc tbloader_impl.cc tbloader_jni.cc
+OBJS_loader_so=tbloader_helper.o tbexport_helper.o tbloader_impl.o tbloader_jni.o
+
+CXX = gcc
+# tbloader_helper 编译选项
+#CFLAGS = -m64 -g -pthread -DUSE_WDBI -DBIGENDIAN -DDEBUG -DFREE_MEM -DTBLOADER_HELPER_TEST -fpic -fPIC
+CFLAGS = -m64 -g -pthread -DUSE_WDBI -DBIGENDIAN  -DFREE_MEM -DTBLOADER_HELPER_TEST -fpic -fPIC
+
+# 正常选项
+#CFLAGS = -m64 -g -pthread -DUSE_WDBI -DBIGENDIAN -DDEBUG -DFREE_MEM  -fpic -fPIC
+
+all:tbloader tbexporter libtbloader.so
+
+#--------------------------------------------------------
+tbloader: $(OBJS_loader) 
+	$(CXX) $(LDFLAGS) $(OBJS_loader) -o $@  $(LFLAGS) 
+	cp $@ $(DATAMERGER_HOME)/bin/$@
+$(OBJS_loader): $(SOURCE_loader) 
+	$(CXX) $(CFLAGS) $(INCLUDE) -c $(SOURCE_loader) 
+	
+#---------------------------------------------------------	
+tbexporter: $(OBJS_exporter) 
+	$(CXX) $(LDFLAGS) $(OBJS_exporter) -o $@  $(LFLAGS) 
+	cp $@ $(DATAMERGER_HOME)/bin/$@
+$(OBJS_exporter): $(SOURCE_exporter) 
+	$(CXX) $(CFLAGS) $(INCLUDE) -c $(SOURCE_exporter) 
+	
+#---------------------------------------------------------	
+libtbloader.so: $(OBJS_loader_so) 
+	$(CXX) -shared  $(LDFLAGS) $(OBJS_loader_so) -o $@ $(LFLAGS) 
+	cp $@ $(DATAMERGER_HOME)/lib/$@
+$(OBJS_loader_so): $(SOURCE_loader_so) 
+	$(CXX) $(CFLAGS) $(INCLUDE) -c $(SOURCE_loader_so) 
+
+clean: 
+	rm -rf $(OBJS_loader) $(OBJS_exporter) $(OBJS_loader_so) tbloader tbexporter libtbloader.so

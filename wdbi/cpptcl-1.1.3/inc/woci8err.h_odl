@@ -1,0 +1,67 @@
+#ifndef __WOCI8ERR_H
+#define __WOCI8ERR_H
+#ifndef sb4
+#define sb4 int
+#endif
+#ifndef sword
+#define sword int
+#endif
+
+#ifndef BOOL
+#define FALSE 0
+#define TRUE 1
+#define BOOL int
+#endif
+#ifndef _MAX_DIR 
+#define _MAX_DIR 600
+#endif
+int errprintf(const char*, ...);
+class WOCIError {
+protected:
+ char errbuf[14096];
+ static char filen[];
+ static int lineid;
+ static char afilen[];
+ static int alineid;
+ sb4 errcode ;
+ bool autoThrow;
+ static bool echo;
+public :
+	static void SetEcho(bool val);
+	static bool IsEcho() {return echo;};
+	void SetErrCode(int ec);
+ sword retval;
+ void SetAutoThrow(bool val) {autoThrow=val;}
+ WOCIError() {errcode=retval=0;autoThrow=false;}
+ static void logwhere(int l,const char *fn) {
+	alineid=l;
+	strcpy(afilen,fn);
+ }
+ void SetErrPos(int l,const char *fn) {
+	 lineid=l;
+	 strcpy(filen,fn);
+ }
+ void GetErrPos(int &l,char **fn) {l=lineid,*fn=(char *)filen;}
+ void GetAErrPos(int &l,char **fn) {l=alineid,*fn=(char *)afilen;}
+ void checkerr(sword status);
+ void GetLastError(sb4 &erc,char **buf) {erc=errcode,*buf=(char *)errbuf;}
+ void SetErrMsg(char *str) {strcpy(errbuf,str);};
+ void SetCancel() {
+	 strcpy(filen," ");
+	 lineid=0;
+	 retval=errcode=-1;
+	 strcpy(errbuf,"User cancelled operation!");
+ }
+ void Throw() {
+	  if(alineid!=-1)
+	   errprintf("Error occurs at file %s line %d.\n",afilen,alineid);
+	  if(lineid!=-1)
+	   errprintf("File %s line %d.\n",filen,lineid);
+	  errprintf (" ErrorCode: %d.  %s\n",errcode,errbuf);
+	  throw(*((WOCIError *)this));
+ }
+ virtual sb4 GetErrCode() {return errcode;}
+};
+
+#endif
+

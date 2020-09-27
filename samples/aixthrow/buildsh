@@ -1,0 +1,1 @@
+gxlc++ -Wl,-brtl -fPIC -fpic -DPIC -shared -maix64 -o libthrow.so throw.cc 

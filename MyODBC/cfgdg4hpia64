@@ -1,0 +1,8 @@
+export CC=aCC
+export CXX=aCC
+export CFLAGS="+DD64 -DBUILD_REAL_64_BIT_MODE -DFOR_ORAHS"
+export CXXFLAGS="+DD64 -DBUILD_REAL_64_BIT_MODE -DFOR_ORAHS"
+#export CXXFLAGS="+DD64 "
+#export CFLAGS="+DD64"
+configure --enable-threads --enable-shared --with-mysql-path=/app/dm55 --disable-gui --with-unixODBC=/app/dm55 --with-unixODBC-libs=/app/dm55/lib --with-ltdl-path=/app/dm55/lib
+unset CC CFLAGS CXX CXXFLAGS

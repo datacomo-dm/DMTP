@@ -1,0 +1,2 @@
+export CFLAGS='-DBUILD_LEGACY_64_BIT_MODE'
+configure --disable-gui --prefix=/app/dm55

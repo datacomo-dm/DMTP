@@ -1,0 +1,10 @@
+#use xlc can not build shared library,but just static library
+export CC="xlc_r -ma -O3 -qstrict -qoptimize=3 -qmaxmem=8192 -DBUILD_LEGACY_64_BIT_MODE -q64 "
+#CFLAGS="-DBUILD_LEGACY_64_BIT_MODE -q64 "
+#CFLAGS="-DBUILD_LEGACY_64_BIT_MODE -maix64 -O3 "
+export CXX="xlC_r -ma -O3 -qstrict -qoptimize=3 -qmaxmem=8192 -DBUILD_LEGACY_64_BIT_MODE -q64 "
+#CXXFLAGS="-maix64 -O3 "
+#CXXFLAGS=" -q64 "
+#export CC CFLAGS CXX CXXFLAGS
+configure --build=powerpc-ibm-aix5.1 --enable-threads --enable-shared --with-mysql-path=/app/dm55 --disable-gui --with-unixODBC=/app/dm55 --with-unixODBC-libs=/app/dm55/lib --with-ltdl-path=/app/dm55/lib
+unset CC CFLAGS CXX CXXFLAGS

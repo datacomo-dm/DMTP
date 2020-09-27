@@ -1,0 +1,5 @@
+export CC=aCC
+export CXX=aCC
+export CFLAGS="+DD64 -DBUILD_REAL_64_BIT_MODE=1"
+export CXXFLAGS="+DD64 -D-DBUILD_REAL_64_BIT_MODE=1"
+configure --disable-gui --prefix=/app/dm55

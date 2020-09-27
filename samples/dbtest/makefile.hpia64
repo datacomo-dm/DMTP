@@ -1,0 +1,17 @@
+LFLAGS= -ldpiosh 
+LDFLAGS=  +DD64 -L$(DATAMERGER_HOME)/oci -L$(DATAMERGER_HOME)/lib -L$(DATAMERGER_HOME)/unixodbc/lib -L$(DATAMERGER_HOME)/lib/mysql -lwdbi  -lrt -lpthread
+INCLUDE= -I$(DBPLUSSRC_PATH)/inc
+SOURCE=dbcp.cc 
+OBJS=dbcp.o
+CXX = aCC 
+CFLAGS = +DD64 +z -g -DUSE_WDBI
+dbcp: $(OBJS) 
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@  $(LFLAGS) 
+	cp $@ $(DATAMERGER_HOME)/bin/$@
+$(OBJS): $(SOURCE) 
+	$(CXX) $(CFLAGS) $(INCLUDE) -c $(SOURCE) 
+clean:
+	rm -f dbcp dbcp.o
+
+rebuild: clean dbcp	
+

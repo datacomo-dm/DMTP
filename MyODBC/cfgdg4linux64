@@ -1,0 +1,5 @@
+
+export CFLAGS="-DBUILD_REAL_64_BIT_MODE -D_UNIX_ -DFOR_ORAHS"
+configure --enable-threads --enable-shared --with-mysql-path=/app/dm55 --disable-unicode --disable-gui --with-ltdl-path=/usr/share/libtool/libltdl --with-unixODBC=/app/dm55 --with-unixODBC-libs=/app/dm55/lib
+unset CFLAGS
+

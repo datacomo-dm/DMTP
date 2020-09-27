@@ -1,0 +1,7 @@
+export CC="xlc_r -q64 -ma -O3 -qstrict -qoptimize=3 -qmaxmem=8192 -DBUILD_LEGACY_64_BIT_MODE=1"
+export CXX="xlC_r -q64 -ma -O3 -qstrict -qoptimize=3 -qmaxmem=8192 -DBUILD_LEGACY_64_BIT_MODE=1"
+#export CFLAGS="-maix64"
+#export CXXFLAGS="-maix64"
+#CC="gcc -pipe -mcpu=power -Wa,-many"
+#CXX="gcc -pipe -mcpu=power -Wa,-many" 
+configure --disable-gui --prefix=/app/dm51

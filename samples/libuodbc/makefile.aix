@@ -1,0 +1,16 @@
+result:
+	#xlC   -q64 -DPIC -qmkshrobj -c uodbc.cc -I ./include -L/build/tmp/uodbc64/lib -lodbc
+	xlC   -q64 -DPIC -D_DEBUG -qmkshrobj -c uodbc.cc -I ./include -L/build/tmp/uodbc64/lib -lodbc
+	#xlC   -q64 -bM:SRE -qmkshrobj -o libuodbc.so uodbc.o -L/build/tmp/uodbc64/lib -lodbc 
+	xlC   -q64 -bM:SRE -D_DEBUG -qmkshrobj -o libuodbc.so uodbc.o -L/build/tmp/uodbc64/lib -lodbc 
+	@mv   libuodbc.so libuodbc.a
+	xlC   -q64 -o test test.cc -I ./include -L ./ -luodbc
+	@echo "rm -f *.o"
+	@rm -f *.o
+clean:
+	@echo "rm -f *.so"
+	@rm -f *.so
+	@echo "rm -f test"
+	@rm -f test
+	@rm -f *.o
+	@rm -rf *.a

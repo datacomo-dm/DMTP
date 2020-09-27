@@ -1,0 +1,22 @@
+# aix only supc++ have exception-handler ,so we link both stdc++ and supc++ lib
+#LFLAGS= -lwdbi -lclntsh -lm -lbz2 -lucl -lrt -ldpio -llzo2 -lz -lpthread -lmysqlclient_r -lsupc++ -lstdc++ -lodbc
+LFLAGS= -lwdbi -lclntsh -lm -lbz2 -lucl -lrt -ldpio -llzo2 -lz -lpthread -lmysqlclient_r -lodbc
+#-ldpodbc3
+LDFLAGS=  -Wl,-brtl -maix64 -fpic -fPIC -DPIC -L$(DBPLUSSRC_PATH)/lib -L$(DATAMERGER_HOME)/oci -L$(DATAMERGER_HOME)/lib -L$(DATAMERGER_HOME)/lib/mysql -lmystrings
+INCLUDE= -I$(DBPLUSSRC_PATH)/inc -I$(DBPLUSSRC_PATH)/inc/mysql
+SOURCE=dt_check.cpp dt_lib.cpp dumpfile.cpp
+OBJS=dt_check.o dt_lib.o dumpfile.o
+CXX = gxlc++
+# -Wall display all level of compiling info. -O given an optimization level for intrinsics functions
+CFLAGS = -O3 -DMYSQL_VER_51 -D__unix -DWORDS_BIGENDIAN -maix64 -DAIX -fPIC -DB_TIME_FORMAT -D_LARGEFILE_SOURCE -fpic -DPIC -DUSE_WDBI -DWOCI_DEBUG 
+#CFLAGS = -O3 -pthread
+
+dpadmin: $(OBJS) 
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@  $(LFLAGS)
+	cp $@ $(DATAMERGER_HOME)/bin 
+
+$(OBJS): $(SOURCE) 
+	$(CXX) $(CFLAGS) $(INCLUDE) -c $(SOURCE) 
+
+clean:
+	rm -f $(OBJS) dpadmin

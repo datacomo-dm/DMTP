@@ -1,0 +1,124 @@
+#ifndef DBS_TURBO_LIB_HEADER
+#define DBS_TURBO_LIB_HEADER
+#ifdef __unix
+#include <pthread.h>
+#else
+#include <windows.h>
+#include <conio.h>
+#endif
+#include <stdio.h>
+#include <string.h>
+#include <mysql.h>
+#include "woci8intface.h"
+#include "zlib.h"
+#include "woci8err.h"
+#include "AutoHandle.h"
+#include "dt_svrlib.h"
+//void ThrowWith(const char *format,...) ;
+//int xmkdir(const char *dir) ;
+//int SplitStr(const char *src,char **dst,char **pbf) ;
+//void BuildWhere(const char *cols,const char *bvals,const char *evals,char *sqlbf);
+
+//int GetFreeM(const char *path) ;
+
+class MySQLConn {
+  MYSQL		* myData ;
+  MYSQL_RES *result;
+  int num_rows;
+  char host[100],username[100],password[100],dbname[100];
+  unsigned int portnum;
+public :
+	MySQLConn() ;
+	void SelectDB(char *db) ;
+	void Connect(char *host=NULL,char *username=NULL,char *password=NULL,char *dbname=NULL,unsigned int portnum=0) ;
+	~MySQLConn() {
+		if(result) mysql_free_result(result);
+		if(myData) mysql_close( myData ) ;
+		
+	}
+	void DoQuery(const char *szSQL);
+	bool TouchTable(const char *tabname) ;
+};
+
+
+class SysAdmin :public SysParam {
+
+public :
+	void CreateIndex(char *dtname,MySQLConn &conn,int id,char *colsname,bool forcecreate);
+	bool CreateIndex(char *dttabname,char *idxtabname,int createtype,MySQLConn &conn,int tabid,int indexid,bool forcecreate);
+	bool CreateIndexTable(MySQLConn &conn,int srcmt,int tabid,int indexid, const char *tabname, const char *solecolsname,const char *pathvald, bool forcecreate);
+	bool CreateTableOnMysql(const char *cdpathval,MySQLConn &conn, int srcmt,const char *tabname, int tabid, int indexid,int targettype,bool forcecreate);
+	int GetSrcTableStructMt(int srctabp,int tabp,int srcsys);
+	SysAdmin(int dts):SysParam(dts) {};
+	virtual ~SysAdmin() {};
+	void CreateDT(int tabp,int srctabp);
+};
+
+
+class DataDump {
+	AutoMt fnmt;
+	int taskid,srctabid,indexid,datasetid;
+	char tmpfn[300];
+	char tmpidxfn[300];
+	char dumpsql[500];
+	dumpparam dp;
+	int memlimit;
+	int dtdbc;
+	int idxmaxrows;
+	int fnorder;
+	int maxblockrn;
+	mytimer fiotm,sorttm,adjtm;
+public:
+	DataDump(int dtdbc,int maxmem,int maxrows);
+	int BuildMiddleFilePath(int partid,int idx) ;
+	void ProcBlock(int partid,AutoMt *pCur,int idx,AutoMt &blockmt);
+	int DoDump(SysParam &sp) ;
+	~DataDump() {};
+};
+                      
+class MiddleDataLoader {
+	//int blockmaxrows;
+	//int maxindexrows;
+	SysParam *sp;
+	AutoMt mdindexmt;
+	AutoMt indexmt;
+	AutoMt blockmt;
+	///AutoMt mdblockmt;
+	AutoMt mdf;
+	dumpparam dp;
+	int tmpfilenum;
+	file_mt *pdtf;
+	unsigned char *pdtfid;
+	int dtfidlen;
+public:
+	
+	  int Load(MySQLConn &conn) ;
+	  MiddleDataLoader(SysParam *_sp);
+	  ~MiddleDataLoader() {
+		  if(pdtf) delete [] pdtf;
+		  if(pdtfid) delete [] pdtfid;
+		  pdtf=NULL;
+		  pdtfid=NULL;
+		  dtfidlen=0;
+	  }
+};
+
+class DestLoader {
+	int srctabid;
+	int indexid;
+	int subdatasetid,datasetid;
+	int tabid;
+	int partid;
+	int taskid;
+	SysAdmin *psa;
+	dumpparam dp;
+public :
+	DestLoader(SysAdmin *_psa) {
+		psa=_psa;
+	}
+	int Load () ;
+	~DestLoader() {};
+	int RecreateIndex(SysAdmin *_Psa,MySQLConn &conn) ;
+};
+
+#endif

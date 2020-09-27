@@ -1,0 +1,18 @@
+LFLAGS= -Wl,-brtl -maix64 -lwdbi -lrt -ldpiosh -lm -lpthread -lmysqlclient_r  -lclntsh -lbz2 -llzo2 -lz -lucl -lodbc -L/app/dm55/lib/mysql -lmystrings
+#-ldpodbc3
+#LDFLAGS= -Wl,-bnolibpath -L/app/dbplus/lib/oci -L$/app/dbplus/lib
+LDFLAGS= -L$(DATAMERGER_HOME)/oci -L$(DATAMERGER_HOME)/lib -L$(DBPLUSSRC_PATH)/lib 
+INCLUDE= -I$(HOME)/dtsrc/inc
+SOURCE=dbcp.cc 
+OBJS=dbcp.o
+CXX = gxlc++
+CFLAGS = -O3 -DAIX -D__unix -maix64 -DUSE_WDBI -DWOCI_DEBUG
+dbcp: $(OBJS) 
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@  $(LFLAGS) 
+	cp $@ $(DATAMERGER_HOME)/bin
+$(OBJS): $(SOURCE) 
+	$(CXX) $(CFLAGS) $(INCLUDE) -c $(SOURCE) 
+clean:
+	rm -f dbcp dbcp.o
+	
+rebuild: clean dbcp	

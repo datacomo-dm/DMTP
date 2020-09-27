@@ -1,0 +1,1 @@
+xlc -qmkshrobj -o libmyodbc.so *.o -L/app/dm51/lib/lib -lltdl -L/app/dm51/lib/mysql -lmysqlclient_r -lz -lnsl_r -lm -lz  -L/app/dm51/lib -lodbcinst -lpthread -lmyodbc3u -L../util/.libs

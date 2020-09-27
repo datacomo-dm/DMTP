@@ -1,0 +1,16 @@
+LFLAGS= -ldpiosh 
+LDFLAGS=  -L$(DATAMERGER_HOME)/oci -L$(DATAMERGER_HOME)/lib
+INCLUDE= -I$(DBPLUSSRC_PATH)/inc
+SOURCE=desc.cc 
+OBJS=desc.o
+CXX = gcc
+CFLAGS = -O3 -DUSE_WDBI
+dpdesc: $(OBJS) 
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@  $(LFLAGS) 
+	cp $@ $(DATAMERGER_HOME)/bin/$@
+$(OBJS): $(SOURCE) 
+	$(CXX) $(CFLAGS) $(INCLUDE) -c $(SOURCE) 
+clean:
+	rm -f dpdesc desc.o
+	
+rebuild: clean dpdesc	

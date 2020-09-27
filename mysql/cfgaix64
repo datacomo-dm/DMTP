@@ -1,0 +1,8 @@
+export CC="xlc_r -q64 -ma -O3 -qstrict -qoptimize=3 -qmaxmem=8192 "
+export CXX="xlC_r -q64 -ma -O3 -qstrict -qoptimize=3 -qmaxmem=8192"
+
+#export CFLAGS="-maix64"
+#export CXXFLAGS="-maix64"
+#CC="gxlc -pipe -mcpu=power -Wa,-many"
+#CXX="gxlc++ -pipe -mcpu=power -Wa,-many" 
+configure --build=powerpc-ibm-aix5.1 --prefix=/app/dm55 --enable-assembler --with-charset=gbk --with-extra-charsets=all --with-big-tables --without-geometry --without-plugin-daemon_example --without-plugin-ftexample --without-plugin-archive --without-plugin-blackhole --without-plugin-example --with-plugin-innobase --without-plugin-ndbcluster --with-plugin-partition --with-plugin-federated --with-readline --without-libedit --with-low-memory

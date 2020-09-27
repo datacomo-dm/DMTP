@@ -1,0 +1,13 @@
+LFLAGS= -ldpiosh -lm -lrt -lpthread -lstdc++
+LDFLAGS= -L$(DATAMERGER_HOME)/lib
+INCLUDE= -I$(DBPLUSSRC_PATH)/inc
+SOURCE=dbtest.cc 
+OBJS=dbtest.o
+CXX = gcc
+CFLAGS = -g -pthread -DUSE_WDBI -DWOCI_DEBUG
+dbtest: $(OBJS) 
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@  $(LFLAGS) 
+$(OBJS): $(SOURCE) 
+	$(CXX) $(CFLAGS) $(INCLUDE) -c $(SOURCE) 
+clean: 
+	rm -f $(OBJS) dbtest
